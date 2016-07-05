@@ -4,12 +4,12 @@
 'use strict';
 var personModule = require('../database/person.module');
 
-function functionGet(req, res, next) {
+function getFunction(req, res, next) {
   res.send(200, personModule.getAllPersons());
   return next();
 }
 
-function functionPost(req, res, next) {
+function postFunction(req, res, next) {
   try {
     res.send(201, personModule.addPerson(req.body));
     return next();
@@ -29,6 +29,6 @@ function functionPost(req, res, next) {
 }
 
 module.exports = {
-  functionGet: functionGet,
-  functionPost: functionPost
+  getFunction: getFunction,
+  postFunction: postFunction
 };

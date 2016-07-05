@@ -1,26 +1,29 @@
 /**
 * Created by Luis Montero on 6/29/2016.
 */
-
 'use strict';
-
 var persons = [];
 var lastPersonId = 0;
 
 function getAll() {
-  var result = {};
-  result.data = [];
+  var jsonResult = {
+    data: []
+  };
   persons.forEach(function (person) {
-    var api = {};
-    api.attributes = {};
-    api.id = person.PersonId;
-    api.type = 'Person';
-    api.attributes.FirstName = person.FirstName;
-    api.attributes.LastName = person.LastName;
-    api.attributes.CI = person.CI;
-    result.data.push(api);
+    var copyPerson = {
+      id: '' + person.PersonId,
+      type: 'Person',
+      attributes: {
+        FirstName: person.FirstName,
+        LastName: person.LastName,
+        CI: person.CI
+      },
+      relationships: {}
+    };
+    jsonResult.data.push(copyPerson);
   });
-  return result;
+
+  return jsonResult;
 }
 
 function add(person) {
@@ -29,9 +32,16 @@ function add(person) {
   return person;
 }
 
+function find(personId) {
+  return persons.filter(function (person) {
+    return person.PersonId === personId;
+  });
+}
+
 module.exports = {
-  getAllPersons : getAll,
-  addPerson : add
+  getAllPersons: getAll,
+  addPerson: add,
+  findPerson: find
 };
 
 //Controlar los errores, que las funciones no devuelvan true o false.

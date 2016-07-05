@@ -22,16 +22,16 @@ server.use(contentTypeHandler.jsonFunction);
 
 
 //GET localhost:8080/person
-server.get('/person', personResource.functionGet);
+server.get('/person', personResource.getFunction);
 
 //POST localhost:8080/person
-server.post('/person', personResource.functionPost);
+server.post('/person', personResource.postFunction);
 
 //POST localhost:8080/team
-server.post('/team', teamResource.functionPost);
+server.post('/team', teamResource.postFunction);
 
 //GET localhost:8080/team
-server.get('/team', teamResource.functionGet);
+server.get('/team', teamResource.getFunction);
 
 
 

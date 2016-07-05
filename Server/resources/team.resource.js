@@ -4,7 +4,7 @@
 'use strict';
 var teamModule = require('../database/team.module');
 
-function functionPost(req, res, next) {
+function postFunction(req, res, next) {
   try {
     res.send(201, teamModule.addTeam(req.body));
     return next();
@@ -22,12 +22,12 @@ function functionPost(req, res, next) {
   }
 }
 
-function functionGet(req, res, next) {
+function getFunction(req, res, next) {
   res.send(200, teamModule.getAllTeams());
   return next();
 }
 
 module.exports = {
-  functionPost: functionPost,
-  functionGet: functionGet
+  postFunction: postFunction,
+  getFunction: getFunction
 };

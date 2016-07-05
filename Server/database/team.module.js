@@ -16,7 +16,8 @@ function getAll() {
       attributes: {
         TeamName: team.TeamName,
         TeamLevel: team.TeamLevel
-      }
+      },
+      relationships: {}
     };
     jsonResult.data.push(copyTeam);
   });
@@ -30,7 +31,14 @@ function add(team) {
   return team;
 }
 
+function find(teamId) {
+  return teams.filter(function (team) {
+    return team.PersonId === teamId;
+  });
+}
+
 module.exports = {
-  getAllTeams : getAll,
-  addTeam: add
+  getAllTeams: getAll,
+  addTeam: add,
+  findTeam: find
 };
