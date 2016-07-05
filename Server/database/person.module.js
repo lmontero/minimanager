@@ -3,20 +3,29 @@
 */
 
 'use strict';
-const ERROR_SAME_PRIMARY_KEY_MESSAGE = 'An element have the same primary key.';
 
 var persons = [];
+var lastPersonId = 0;
 
 function get() {
-  return persons;
+  var result = {};
+  result.data = [];
+  persons.forEach(function (person) {
+    var api = {};
+    api.attributes = {};
+    api.id = person.PersonId;
+    api.type = 'Person';
+    api.attributes.FirstName = person.FirstName;
+    api.attributes.LastName = person.LastName;
+    api.attributes.CI = person.CI;
+    result.data.push(api);
+  });
+  return result;
 }
 
 function add(person) {
-  if (persons.filter(function (item) {
-      return item.PersonId === person.PersonId
-    }).length){
-    throw new Error(ERROR_SAME_PRIMARY_KEY_MESSAGE);
-  }
+  lastPersonId++;
+  person.PersonId = lastPersonId; 
   persons.push(person);
   return person;
 }
@@ -28,3 +37,4 @@ module.exports = {
 
 //Controlar los errores, que las funciones no devuelvan true o false.
 //http://jsonapi.org/ revisar esta pagina para el formato de los objetos json
+//websockets reconecciones investigar
