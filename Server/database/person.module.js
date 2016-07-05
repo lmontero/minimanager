@@ -7,7 +7,7 @@
 var persons = [];
 var lastPersonId = 0;
 
-function get() {
+function getAll() {
   var result = {};
   result.data = [];
   persons.forEach(function (person) {
@@ -24,15 +24,14 @@ function get() {
 }
 
 function add(person) {
-  lastPersonId++;
-  person.PersonId = lastPersonId; 
+  person.PersonId = ++lastPersonId;
   persons.push(person);
   return person;
 }
 
 module.exports = {
-  getAllPersons : get,
-  insertPerson : add
+  getAllPersons : getAll,
+  addPerson : add
 };
 
 //Controlar los errores, que las funciones no devuelvan true o false.

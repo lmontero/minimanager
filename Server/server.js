@@ -1,66 +1,37 @@
 /**
  * Created by Luis Montero on 6/28/2016.
  */
-
 'use strict';
 var restify = require('restify');
 var server = restify.createServer({
   name: 'minimanager'
 });
+
+//Libraries
 server.use(restify.bodyParser());   //Enable to send data by body.
 
-//MODULES
-var modulePerson = require('./database/person.module');
+//Resources
+var personResource = require('./resources/person.resource');
+var teamResource = require('./resources/team.resource');
+
+//Handlers
+var contentTypeHandler = require('./handlers/content-type.handler');
 
 //This function will check if the API's have the application/json content type.
-server.use(function (req, res, next) {
-  if (req.is('application/json')) {
-    return next();
-  }
-  var errorObject = {
-    code: "The accept header is not an application/json.",
-    title: "Not Acceptable Response",
-    detail: "The Header is wrong."
-  };
-  var result = {};
-  result.errors = [];
-  result.errors.push(errorObject);
-  res.send(406, result);
-  return next(err);
-});
-
-
-
+server.use(contentTypeHandler.jsonFunction);
 
 
 //GET localhost:8080/person
-server.get('/person', function (req, res, next) {
-  res.send(200, modulePerson.getAllPersons());
-  return next();
-});
+server.get('/person', personResource.functionGet);
 
 //POST localhost:8080/person
-server.post('/person', function (req, res, next) {
-  try {
-    console.log('pasa el middleware');
-    res.send(201, modulePerson.insertPerson(req.body));
-    return next();
-  }
-  catch (error){
-    var errorObject = {
-      status: "400",
-      code: error,
-      title: "Bad Request",
-      detail: "An error was happen trying save a new Person."
-    };
-    var result = {};
-    result.errors = [];
-    result.errors.push(errorObject);
-    res.send(400, result);
-    return next();
-  }
-});
+server.post('/person', personResource.functionPost);
 
+//POST localhost:8080/team
+server.post('/team', teamResource.functionPost);
+
+//GET localhost:8080/team
+server.get('/team', teamResource.functionGet);
 
 
 
