@@ -4,7 +4,6 @@
 'use strict';
 
 var personModule = require('./person.module');
-var teamModule = require('./team.module');
 
 var employees= [];
 var lastEmployeeId = 0;
@@ -21,8 +20,7 @@ function getAll() {
         Code: employee.Code,
         StartingDate: employee.StartingDate,
         EndingDate: employee.EndingDate,
-        PersonId: employee.PersonId,
-        TeamId: employee.TeamId
+        PersonId: employee.PersonId
       },
       relationships: {}
     };
@@ -41,21 +39,20 @@ function add(employee) {
   else {
     employee.PersonId = null;
   }
-  
-  if (employee.TeamId > 0) {
-    if (!teamModule.findTeam(employee.TeamId)) {
-      throw new Error('Not exist a team with this key.');
-    }
-  }
-  else {
-    employee.TeamId = null;
-  }
+
   employee.EmployeeId = ++lastEmployeeId;
   employees.push(employee);
   return employee;
 }
 
+function find(employeeId) {
+  return employees.filter(function (employee) {
+    return employee.EmployeeId === employeeId;
+  });
+}
+
 module.exports = {
   getAllEmployees: getAll,
-  addEmployee: add
+  addEmployee: add,
+  findEmployee: find
 };
