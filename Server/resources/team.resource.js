@@ -2,11 +2,12 @@
  * Created by Luis Montero on 7/5/2016.
  */
 'use strict';
-var teamModule = require('../database/team.module');
 
-function postFunction(req, res, next) {
+//var teamModule = require('../database/team.module');
+
+/*function postFunction(req, res, next) {
   try {
-    res.send(201, teamModule.addTeam(req.body));
+    res.send(201, teamModule.insertOne(req.body));
     return next();
   }
   catch (error){
@@ -30,4 +31,31 @@ function getFunction(req, res, next) {
 module.exports = {
   postFunction: postFunction,
   getFunction: getFunction
-};
+};*/
+
+function execute(server, db) {
+  server.get('/teams', function (req, res, next) {
+    res.send(200, db.teams.find());
+    return next();
+  });
+  
+  server.post('/teams', function (req, res, next) {
+    try {
+      res.send(201, db.teams.insertOne(req.body));
+      return next();
+    }
+    catch (error){
+      var jsonResult = { errors: [] };
+      var copyError = {
+        code: error,
+        title: 'Bad Request',
+        detail: 'An error was happen trying to save a new Team.'
+      };
+      jsonResult.errors.push(copyError);
+      res.send(400, jsonResult);
+      return next();
+    }
+  });
+}
+
+module.exports = execute;

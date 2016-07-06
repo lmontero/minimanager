@@ -8,7 +8,7 @@ var personModule = require('./person.module');
 var employees= [];
 var lastEmployeeId = 0;
 
-function getAll() {
+/*function getAll() {
   var jsonResult = {
     data: []
   };
@@ -28,11 +28,11 @@ function getAll() {
   });
 
   return jsonResult;
-}
+}*/
 
 function add(employee) {
   if (employee.PersonId > 0) {
-    if (!personModule.findPerson(employee.PersonId)) {
+    if (!personModule.find({_id: employee.PersonId}).length) {
       throw new Error('Not exist a person with this key.');
     }
   }
@@ -40,19 +40,26 @@ function add(employee) {
     employee.PersonId = null;
   }
 
-  employee.EmployeeId = ++lastEmployeeId;
+  employee._id = ++lastEmployeeId;
   employees.push(employee);
   return employee;
 }
 
-function find(employeeId) {
+function find(parameters) {
+  if (!parameters) {
+    return employees;
+  }
   return employees.filter(function (employee) {
-    return employee.EmployeeId === employeeId;
+    return (parameters._id !== undefined ? parameters._id === employee._id : true) &&
+      (parameters.Code !== undefined ? parameters.Code === employee.Code : true) &&
+      (parameters.PersonId !== undefined ? parameters.PersonId === employee.PersonId : true) &&
+      (parameters.StartingDate !== undefined ? parameters.StartingDate === employee.StartingDate : true) &&
+      (parameters.EndingDate !== undefined ? parameters.EndingDate === employee.EndingDate : true);
   });
 }
 
 module.exports = {
-  getAllEmployees: getAll,
-  addEmployee: add,
-  findEmployee: find
+  //getAllEmployees: getAll,
+  insertOne: add,
+  find: find
 };

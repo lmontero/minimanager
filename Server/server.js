@@ -11,27 +11,40 @@ var server = restify.createServer({
 server.use(restify.bodyParser());   //Enable to send data by body.
 
 //Resources
-var personResource = require('./resources/person.resource');
-var teamResource = require('./resources/team.resource');
+//var personResource = require('./resources/person.resource');
+//var teamResource = require('./resources/team.resource');
 
-//Handlers
-var contentTypeHandler = require('./handlers/content-type.handler');
+
 
 //This function will check if the API's have the application/json content type.
-server.use(contentTypeHandler.jsonFunction);
+//server.use(contentTypeHandler.jsonFunction);
 
 
 //GET localhost:8080/person
-server.get('/person', personResource.getFunction);
+//server.get('/person', personResource.getFunction);
 
 //POST localhost:8080/person
-server.post('/person', personResource.postFunction);
+//server.post('/person', personResource.postFunction);
 
 //POST localhost:8080/team
-server.post('/team', teamResource.postFunction);
+//server.post('/team', teamResource.postFunction);
 
 //GET localhost:8080/team
-server.get('/team', teamResource.getFunction);
+//server.get('/team', teamResource.getFunction);
+
+//pasar todas estas rutas en diferentes archivos enviando el server u route
+
+
+var database = require('./database/database').createDatabase();
+
+
+//Middlewares
+var contentTypeHandler = require('./middlewares/content-type.middleware')(server);
+
+
+//Resources or controllers.
+var personResource = require('./resources/person.resource')(server, database);
+var teamResource = require('./resources/team.resource')(server, database);
 
 
 

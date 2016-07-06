@@ -6,10 +6,10 @@
 var employeeModule = require('./employee.module');
 var teamModule = require('./team.module');
 
-var teamMembers= [];
+var members= [];
 var lastTeamMemberId = 0;
 
-function getAll() {
+/*function getAll() {
   var jsonResult = {
     data: []
   };
@@ -29,11 +29,11 @@ function getAll() {
   });
 
   return jsonResult;
-}
+}*/
 
 function add(teamMember) {
   if (teamMember.EmployeeId > 0) {
-    if (!employeeModule.findEmployee(teamMember.EmployeeId)) {
+    if (!employeeModule.find({_id: teamMember.EmployeeId}).length) {
       throw new Error('Not exist an employee with this key.');
     }
   }
@@ -42,19 +42,34 @@ function add(teamMember) {
   }
 
   if (teamMember.TeamId > 0) {
-    if (!teamModule.findTeam(teamMember.TeamId)) {
+    if (!teamModule.find({_id: teamMember.TeamId}).length) {
       throw new Error('Not exist a team with this key.');
     }
   }
   else {
     teamMember.TeamId = null;
   }
-  teamMember.TeamMemberId = ++lastTeamMemberId;
-  teamMembers.push(teamMember);
+  
+  teamMember._id = ++lastTeamMemberId;
+  members.push(teamMember);
   return teamMember;
 }
 
+function find(parameters) {
+  if (!parameters) {
+    return members;
+  }
+  return members.filter(function (member) {
+    return (parameters._id !== undefined ? parameters._id === member._id : true) &&
+      (parameters.EmployeeId !== undefined ? parameters.EmployeeId === member.EmployeeId : true) &&
+      (parameters.TeamId !== undefined ? parameters.TeamId === member.TeamId : true) &&
+      (parameters.StartingDate !== undefined ? parameters.StartingDate === member.StartingDate : true) &&
+      (parameters.EndingDate !== undefined ? parameters.EndingDate === member.EndingDate : true);
+  });
+}
+
 module.exports = {
-  getAllTeamMembers: getAll,
-  addTeamMember: add
+  //getAllTeamMembers: getAll,
+  find: find,
+  insertOne: add
 }

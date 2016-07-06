@@ -5,7 +5,7 @@
 var teams = [];
 var lastTeamId = 0;
 
-function getAll() {
+/*function getAll() {
   var jsonResult = {
     data: []
   };
@@ -23,22 +23,27 @@ function getAll() {
   });
   
   return jsonResult;
-}
+}*/
 
 function add(team) {
-  team.TeamId = ++lastTeamId;
+  team._id = ++lastTeamId;
   teams.push(team);
   return team;
 }
 
-function find(teamId) {
+function find(parameters) {
+  if (!parameters) {
+    return teams;
+  }
   return teams.filter(function (team) {
-    return team.PersonId === teamId;
+    return (parameters._id !== undefined ? parameters._id === team._id : true) &&
+      (parameters.TeamName !== undefined ? parameters.TeamName === team.TeamName : true) &&
+      (parameters.TeamLevel !== undefined ? parameters.TeamLevel === team.TeamLevel : true);
   });
 }
 
 module.exports = {
-  getAllTeams: getAll,
-  addTeam: add,
-  findTeam: find
+  //getAllTeams: getAll,
+  insertOne: add,
+  find: find
 };

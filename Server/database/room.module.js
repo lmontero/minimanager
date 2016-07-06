@@ -5,7 +5,7 @@
 var rooms = [];
 var lastRoomId = 0;
 
-function getAll() {
+/*function getAll() {
   var jsonResult = {
     data: []
   };
@@ -25,22 +25,29 @@ function getAll() {
   });
 
   return jsonResult;
-}
+}*/
 
 function add(room) {
-  room.RoomId = ++lastRoomId;
+  room._id = ++lastRoomId;
   rooms.push(room);
   return room;
 }
 
-function find(roomId) {
+function find(parameters) {
+  if (!parameters) {
+    return rooms;
+  }
   return rooms.filter(function (room) {
-    return room.RoomId === roomId;
+    return (parameters._id !== undefined ? parameters._id === room._id : true) &&
+      (parameters.RoomName !== undefined ? parameters.RoomName === room.RoomName : true) &&
+      (parameters.Location !== undefined ? parameters.Location === room.Location : true) &&
+      (parameters.Capacity !== undefined ? parameters.Capacity === room.Capacity : true) &&
+      (parameters.AccessLevel !== undefined ? parameters.AccessLevel === room.AccessLevel : true);
   });
 }
 
 module.exports = {
-  getAllRooms: getAll,
-  addRoom: add,
-  findRoom: find
+  //getAllRooms: getAll,
+  insertOne: add,
+  find: find
 };
