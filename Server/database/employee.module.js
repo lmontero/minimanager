@@ -31,35 +31,57 @@ var lastEmployeeId = 0;
 }*/
 
 function add(employee) {
-  if (employee.PersonId > 0) {
-    if (!personModule.find({_id: employee.PersonId}).length) {
-      throw new Error('Not exist a person with this key.');
+  return new Promise(function (resolve, reject) {
+    if (!employees) {
+      return reject({message: 'Error, something was happened with employees collection.'});
     }
-  }
-  else {
-    employee.PersonId = null;
-  }
 
-  employee._id = ++lastEmployeeId;
-  employees.push(employee);
-  return employee;
+    if (employee.PersonId > 0) {
+      personModule.find({_id: employee.PersonId})
+        .then(function (result) {
+          if (!result.length) {
+            return reject({message: 'Error, not exist a person with this key.'})
+          }
+        })
+        .catch(function (error) {
+          return reject(error);
+        });
+    }
+    else {
+      employee.PersonId = null;
+    }
+
+    employee._id = ++lastEmployeeId;
+    employees.push(employee);
+    return resolve(employee);
+  });
 }
 
 function find(parameters) {
-  if (!parameters) {
-    return employees;
-  }
-  return employees.filter(function (employee) {
-    return (parameters._id !== undefined ? parameters._id === employee._id : true) &&
-      (parameters.Code !== undefined ? parameters.Code === employee.Code : true) &&
-      (parameters.PersonId !== undefined ? parameters.PersonId === employee.PersonId : true) &&
-      (parameters.StartingDate !== undefined ? parameters.StartingDate === employee.StartingDate : true) &&
-      (parameters.EndingDate !== undefined ? parameters.EndingDate === employee.EndingDate : true);
+  return new Promise(function (resolve, reject) {
+    if (!employees) {
+      return reject({message: 'Error, something was happened with employees collection.'});
+    }
+
+    if (!parameters) {
+      return resolve(employees);
+    }
+
+    function filterFunction(employee) {
+      return (parameters._id !== undefined ? parameters._id === employee._id : true) &&
+        (parameters.Code !== undefined ? parameters.Code === employee.Code : true) &&
+        (parameters.PersonId !== undefined ? parameters.PersonId === employee.PersonId : true) &&
+        (parameters.StartingDate !== undefined ? parameters.StartingDate === employee.StartingDate : true) &&
+        (parameters.EndingDate !== undefined ? parameters.EndingDate === employee.EndingDate : true);
+    }
+
+    var resultCollection = employees.filter(filterFunction);
+
+    return resolve(resultCollection);
   });
 }
 
 module.exports = {
-  //getAllEmployees: getAll,
   insertOne: add,
   find: find
 };

@@ -51,3 +51,8 @@ var teamResource = require('./resources/team.resource')(server, database);
 server.listen(8080, 'localhost', function() {
   console.log('%s listening at %s', server.name, server.url);
 });
+
+
+
+
+//Crear utro apartado para la creacion de objetos JSON para el retorno de las API.

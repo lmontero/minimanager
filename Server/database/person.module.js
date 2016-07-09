@@ -27,25 +27,40 @@ var lastPersonId = 0;
 }*/
 
 function add(person) {
-  person._id = ++lastPersonId;
-  people.push(person);
-  return person;
+  return new Promise(function (resolve, reject) {
+    if (!people) {
+      return reject({message: 'Error, something was happened with people collection.'});
+    }
+    person._id = ++lastPersonId;
+    people.push(person);
+    resolve(person);
+  });
 }
 
 function find(parameters) {
-  if (!parameters) {
-    return people;
-  }
-  return people.filter(function (person) {
-    return (parameters._id !== undefined ? parameters._id === person._id : true) &&
-      (parameters.FirstName !== undefined ? parameters.FirstName === person.FirstName : true) &&
-      (parameters.LastName !== undefined ? parameters.LastName === person.LastName : true) &&
-      (parameters.CI !== undefined ? parameters.CI === person.CI : true);
+  return new Promise(function (resolve, reject) {
+    if (!people) {
+      return reject({message: 'Error, something was happened with people collection.'});
+    }
+
+    if (!parameters) {
+      return resolve(people);
+    }
+
+    function filterFunction(person) {
+      return (parameters._id !== undefined ? parameters._id === person._id : true) &&
+        (parameters.FirstName !== undefined ? parameters.FirstName === person.FirstName : true) &&
+        (parameters.LastName !== undefined ? parameters.LastName === person.LastName : true) &&
+        (parameters.CI !== undefined ? parameters.CI === person.CI : true);
+    }
+
+    var resultCollection = people.filter(filterFunction);
+
+    return resolve(resultCollection);
   });
 }
 
 module.exports = {
-  //getAllPersons: getAll,
   insertOne: add,
   find: find
 };

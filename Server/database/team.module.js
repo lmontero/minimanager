@@ -26,24 +26,40 @@ var lastTeamId = 0;
 }*/
 
 function add(team) {
-  team._id = ++lastTeamId;
-  teams.push(team);
-  return team;
+  return new Promise(function (resolve, reject) {
+    if (!teams) {
+      return reject({message: 'Error, something was happened with teams collection.'});
+    }
+
+    team._id = ++lastTeamId;
+    teams.push(team);
+    return resolve(team);
+  });
 }
 
 function find(parameters) {
-  if (!parameters) {
-    return teams;
-  }
-  return teams.filter(function (team) {
-    return (parameters._id !== undefined ? parameters._id === team._id : true) &&
-      (parameters.TeamName !== undefined ? parameters.TeamName === team.TeamName : true) &&
-      (parameters.TeamLevel !== undefined ? parameters.TeamLevel === team.TeamLevel : true);
+  return new Promise(function (resolve, reject) {
+    if (!teams) {
+      return reject({message: 'Error, something was happened with teams collection.'});
+    }
+
+    if (!parameters) {
+      return resolve(teams);
+    }
+
+    function filterFunction(team) {
+      return (parameters._id !== undefined ? parameters._id === team._id : true) &&
+        (parameters.TeamName !== undefined ? parameters.TeamName === team.TeamName : true) &&
+        (parameters.TeamLevel !== undefined ? parameters.TeamLevel === team.TeamLevel : true);
+    }
+    
+    var resultCollection = teams.filter(filterFunction);
+
+    return resolve(resultCollection);
   });
 }
 
 module.exports = {
-  //getAllTeams: getAll,
   insertOne: add,
   find: find
 };

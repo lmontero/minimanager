@@ -32,44 +32,72 @@ var lastTeamMemberId = 0;
 }*/
 
 function add(teamMember) {
-  if (teamMember.EmployeeId > 0) {
-    if (!employeeModule.find({_id: teamMember.EmployeeId}).length) {
-      throw new Error('Not exist an employee with this key.');
+  return new Promise(function (resolve, reject) {
+    if (!members) {
+      return reject({message: 'Error, something was happened with members collection.'});
     }
-  }
-  else {
-    teamMember.EmployeeId = null;
-  }
 
-  if (teamMember.TeamId > 0) {
-    if (!teamModule.find({_id: teamMember.TeamId}).length) {
-      throw new Error('Not exist a team with this key.');
+    if (teamMember.EmployeeId > 0) {
+      employeeModule.find({_id: teamMember.EmployeeId})
+        .then(function (result) {
+          if (!result.length) {
+            return reject({message: 'Error, not exist an employee with this key.'});
+          }
+        })
+        .catch(function (error) {
+          return reject(error);
+        });
     }
-  }
-  else {
-    teamMember.TeamId = null;
-  }
-  
-  teamMember._id = ++lastTeamMemberId;
-  members.push(teamMember);
-  return teamMember;
+    else {
+      teamMember.EmployeeId = null;
+    }
+
+    if (teamMember.TeamId > 0) {
+      teamModule.find({_id: teamMember.TeamId})
+        .then(function (result) {
+          if (! result.length) {
+            return reject({message: 'Error, not exist a team with this key.'});
+          }
+        })
+        .catch(function (error) {
+          return reject(error);
+        });
+    }
+    else {
+      teamMember.TeamId = null;
+    }
+
+    teamMember._id = ++lastTeamMemberId;
+    members.push(teamMember);
+    return resolve(teamMember);
+  });
 }
 
 function find(parameters) {
-  if (!parameters) {
-    return members;
-  }
-  return members.filter(function (member) {
-    return (parameters._id !== undefined ? parameters._id === member._id : true) &&
-      (parameters.EmployeeId !== undefined ? parameters.EmployeeId === member.EmployeeId : true) &&
-      (parameters.TeamId !== undefined ? parameters.TeamId === member.TeamId : true) &&
-      (parameters.StartingDate !== undefined ? parameters.StartingDate === member.StartingDate : true) &&
-      (parameters.EndingDate !== undefined ? parameters.EndingDate === member.EndingDate : true);
+  return new Promise(function (resolve, reject) {
+    if (!members) {
+      return reject({message: 'Error, something was happened with members collection.'});
+    }
+
+    if (!parameters) {
+      return resolve(members);
+    }
+
+    function filterFunction(member) {
+      return (parameters._id !== undefined ? parameters._id === member._id : true) &&
+        (parameters.EmployeeId !== undefined ? parameters.EmployeeId === member.EmployeeId : true) &&
+        (parameters.TeamId !== undefined ? parameters.TeamId === member.TeamId : true) &&
+        (parameters.StartingDate !== undefined ? parameters.StartingDate === member.StartingDate : true) &&
+        (parameters.EndingDate !== undefined ? parameters.EndingDate === member.EndingDate : true);
+    }
+
+    var resultCollection = members.filter(filterFunction);
+
+    return resolve(resultCollection);
   });
 }
 
 module.exports = {
-  //getAllTeamMembers: getAll,
   find: find,
   insertOne: add
 }

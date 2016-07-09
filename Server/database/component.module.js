@@ -29,33 +29,55 @@ var lastComponentId = 0;
 }*/
 
 function add(component) {
-  if (component.RoomId > 0) {
-    if (!roomModule.find({_id: component.RoomId}).length) {
-      throw new Error('Not exist a room with this key.');
+  return new Promise(function (resolve, reject) {
+    if (!components) {
+      return reject({message: 'Error, something was happened with components collection.'});
     }
-  }
-  else {
-    component.RoomId = null;
-  }
-  
-  component._id = ++lastComponentId;
-  components.push(component);
-  return component;
+    if (component.RoomId > 0) {
+      roomModule.find({_id: component.RoomId})
+        .then(function (result) {
+          if (!result.length) {
+            return reject({message: 'Error, not exist a room with this key.'});
+          }
+        })
+        .catch(function (error) {
+          return reject(error);
+        });
+    }
+    else {
+      component.RoomId = null;
+    }
+
+    component._id = ++lastComponentId;
+    components.push(component);
+
+    return resolve(component);
+  });
 }
 
 function find(parameters) {
-  if (!parameters) {
-    return components;
-  }
-  return components.filter(function (component) {
-    return (parameters._id !== undefined ? parameters._id === component._id : true) &&
-      (parameters.Name !== undefined ? parameters.Name === component.Name : true) &&
-      (parameters.RoomId !== undefined ? parameters.RoomId === component.RoomId : true);
+  return new Promise(function (resolve, reject) {
+    if (!components) {
+      return reject({message: 'Error, something was happened with components collection.'});
+    }
+
+    if (!parameters) {
+      return resolve(components);
+    }
+
+    function filterFunction(component) {
+      return (parameters._id !== undefined ? parameters._id === component._id : true) &&
+        (parameters.Name !== undefined ? parameters.Name === component.Name : true) &&
+        (parameters.RoomId !== undefined ? parameters.RoomId === component.RoomId : true);
+    }
+
+    var resultCollection = components.filter(filterFunction);
+
+    return resolve(resultCollection);
   });
 }
 
 module.exports = {
-  //getAllComponents: getAll,
   find: find,
   insertOne: add
 };

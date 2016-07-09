@@ -32,44 +32,72 @@ var lastScheduleId = 0;
 }*/
 
 function add(schedule) {
-  if (schedule.RoomId > 0) {
-    if (!roomModule.find({_id: schedule.RoomId}).length) {
-      throw new Error('Not exist a room with this key.');
+  return new Promise(function (resolve, reject) {
+    if (!schedules) {
+      return reject({message: 'Error, something was happened with schedules collection.'});
     }
-  }
-  else {
-    schedule.RoomId = null;
-  }
 
-  if (schedule.TeamId > 0) {
-    if (!teamModule.find({_id: schedule.TeamId}).length) {
-      throw new Error('Not exist a team with this key.');
+    if (schedule.RoomId > 0) {
+      roomModule.find({_id: schedule.RoomId})
+        .then(function (result) {
+          if (!result.length) {
+            return reject({message: 'Error, not exist a room with this key.'});
+          }
+        })
+        .catch(function (error) {
+          return reject(error);
+        });
     }
-  }
-  else {
-    schedule.TeamId = null;
-  }
-  
-  schedule._id = ++lastScheduleId;
-  schedules.push(schedule);
-  return schedule;
+    else {
+      schedule.RoomId = null;
+    }
+
+    if (schedule.TeamId > 0) {
+      teamModule.find({_id: schedule.TeamId})
+        .then(function (result) {
+          if (!result.length) {
+            return reject({message: 'Error, not exist a team with this key.'});
+          }
+        })
+        .catch(function (error) {
+          return reject(error);
+        });
+    }
+    else {
+      schedule.TeamId = null;
+    }
+
+    schedule._id = ++lastScheduleId;
+    schedules.push(schedule);
+    return resolve(schedule);
+  });
 }
 
 function find(parameters) {
-  if (!parameters) {
-    return schedules;
-  }
-  return schedules.filter(function (schedule) {
-    return (parameters._id !== undefined ? parameters._id === schedule._id : true) &&
-      (parameters.RoomId !== undefined ? parameters.RoomId === schedule.RoomId : true) &&
-      (parameters.TeamId !== undefined ? parameters.TeamId === schedule.TeamId : true) &&
-      (parameters.StartingDateTime !== undefined ? parameters.StartingDateTime === schedule.StartingDateTime : true) &&
-      (parameters.EndingDateTime !== undefined ? parameters.EndingDateTime === schedule.EndingDateTime : true);
+  return new Promise(function (resolve, reject) {
+    if (!schedules) {
+      return reject({message: 'Error, something was happened with schedules collection.'});
+    }
+
+    if (!parameters) {
+      return resolve(schedules);
+    }
+
+    function filterFunction(schedule) {
+      return (parameters._id !== undefined ? parameters._id === schedule._id : true) &&
+        (parameters.RoomId !== undefined ? parameters.RoomId === schedule.RoomId : true) &&
+        (parameters.TeamId !== undefined ? parameters.TeamId === schedule.TeamId : true) &&
+        (parameters.StartingDateTime !== undefined ? parameters.StartingDateTime === schedule.StartingDateTime : true) &&
+        (parameters.EndingDateTime !== undefined ? parameters.EndingDateTime === schedule.EndingDateTime : true);
+    }
+
+    var resultCollection = schedules.filter(filterFunction);
+
+    return resolve(resultCollection);
   });
 }
 
 module.exports = {
-  //getAllEmployees: getAll,
   find: find,
   insertOne: add
 };
