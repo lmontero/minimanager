@@ -31,30 +31,32 @@ var lastEmployeeId = 0;
 }*/
 
 function add(employee) {
-  return new Promise(function (resolve, reject) {
-    if (!employees) {
-      return reject({message: 'Error, something was happened with employees collection.'});
-    }
+  if (!employees) {
+    return Promise.reject({message: 'Error, something was happened with employees collection.'});
+  }
 
-    if (employee.PersonId > 0) {
-      personModule.find({_id: employee.PersonId})
-        .then(function (result) {
-          if (!result.length) {
-            return reject({message: 'Error, not exist a person with this key.'})
-          }
-        })
-        .catch(function (error) {
-          return reject(error);
-        });
-    }
-    else {
-      employee.PersonId = null;
-    }
+  return Promise.resolve()
+    .then(function () {
+      if (employee.PersonId > 0) {
+        return personModule.find({_id: employee.PersonId});
+      }
+    })
+    .then(function (result) {
+      if (Array.isArray(result) && !result.length) {
+        return Promise.reject({message: 'Error, not exist a person with this key.'});
+      }
 
-    employee._id = ++lastEmployeeId;
-    employees.push(employee);
-    return resolve(employee);
-  });
+      if (result === undefined) {
+        employee.PersonId = null;
+      }
+
+      employee._id = ++lastEmployeeId;
+      employees.push(employee);
+      return Promise.resolve(employee);
+    })
+    .catch(function (error) {
+      return Promise.reject(error);
+    });
 }
 
 function find(parameters) {

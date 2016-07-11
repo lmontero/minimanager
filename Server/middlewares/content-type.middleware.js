@@ -23,6 +23,7 @@ function execute(server) {
   //Content type Json.
   server.use(function (req, res, next) {
     if (req.is('application/json')) {
+      console.log('is json.');
       return next();
     }
     var errorObject = {
@@ -30,11 +31,11 @@ function execute(server) {
       title: "Not Acceptable Response",
       detail: "The Header is wrong."
     };
-    var result = {};
-    result.errors = [];
+    var result = { errors: []};
     result.errors.push(errorObject);
     res.send(406, result);
-    return next(err);
+    console.log('is not json.');
+    return next();
   });
 }
 

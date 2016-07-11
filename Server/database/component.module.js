@@ -29,30 +29,32 @@ var lastComponentId = 0;
 }*/
 
 function add(component) {
-  return new Promise(function (resolve, reject) {
-    if (!components) {
-      return reject({message: 'Error, something was happened with components collection.'});
-    }
-    if (component.RoomId > 0) {
-      roomModule.find({_id: component.RoomId})
-        .then(function (result) {
-          if (!result.length) {
-            return reject({message: 'Error, not exist a room with this key.'});
-          }
-        })
-        .catch(function (error) {
-          return reject(error);
-        });
-    }
-    else {
-      component.RoomId = null;
-    }
+  if (!components) {
+    return Promise.reject({message: 'Error, something was happened with components collection.'});
+  }
 
-    component._id = ++lastComponentId;
-    components.push(component);
+  return Promise.resolve()
+    .then(function () {
+      if (component.RoomId > 0) {
+        return roomModule.find({_id: component.RoomId});
+      }
+    })
+    .then(function (result) {
+      if (Array.isArray(result) && !result.length) {
+        return Promise.reject({message: 'Error, not exist a room with this key.'});
+      }
 
-    return resolve(component);
-  });
+      if (result === undefined) {
+        component.RoomId = null;
+      }
+
+      component._id = ++lastComponentId;
+      components.push(component);
+      return component;
+    })
+    .catch(function (error) {
+      return Promise.reject(error);
+    });
 }
 
 function find(parameters) {

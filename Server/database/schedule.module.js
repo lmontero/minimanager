@@ -32,12 +32,53 @@ var lastScheduleId = 0;
 }*/
 
 function add(schedule) {
-  return new Promise(function (resolve, reject) {
-    if (!schedules) {
-      return reject({message: 'Error, something was happened with schedules collection.'});
-    }
+  if (!schedules) {
+    return Promise.reject({message: 'Error, something was happened with schedules collection.'});
+  }
 
-    if (schedule.RoomId > 0) {
+  return Promise.resolve()
+    .then(function () {
+      if (schedule.RoomId > 0) {
+        return roomModule.find({_id: schedule.RoomId})
+      }
+    })
+    .then(function (result) {
+      if (Array.isArray(result) && !result.length) {
+        return Promise.reject({message: 'Error, not exist a room with this key.'});
+      }
+
+      if (result === undefined) {
+        schedule.RoomId = null;
+      }
+  
+      if (schedule.TeamId > 0) {
+        return teamModule.find({_id: schedule.TeamId});
+      }
+    })
+    .then(function (result) {
+      if (Array.isArray(result) && !result.length) {
+        return Promise.reject({message: 'Error, not exist a team with this key.'});
+      }
+      
+      if (result === undefined) {
+        schedule.TeamId = null;
+      }
+  
+      schedule._id = ++lastScheduleId;
+      schedules.push(schedule);
+      
+      return Promise.resolve(schedule);
+    })
+    .catch(function (error) {
+      return Promise.reject(error);
+    });
+
+  //return new Promise(function (resolve, reject) {
+    /*if (!schedules) {
+      return reject({message: 'Error, something was happened with schedules collection.'});
+    }*/
+
+    /*if (schedule.RoomId > 0) {
       roomModule.find({_id: schedule.RoomId})
         .then(function (result) {
           if (!result.length) {
@@ -70,7 +111,7 @@ function add(schedule) {
     schedule._id = ++lastScheduleId;
     schedules.push(schedule);
     return resolve(schedule);
-  });
+  });*/
 }
 
 function find(parameters) {

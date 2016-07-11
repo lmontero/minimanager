@@ -29,29 +29,56 @@ function postFunction(req, res, next) {
   }
 }*/
 
+
+
 function execute(server, db) {
   server.get('/people', function (req, res, next) {
-    res.send(200, db.people.find());
-    return next();
+    if (res.statusCode >= 400) {
+      return next();
+    }
+    
+    db.people.find()
+      .then(function (result) {
+        res.send(200, result);
+        return next();
+      })
+      .catch(function (error) {
+        console.log('error: ' + error);
+        var errorObject = {
+          code: error,
+          title: "Bad Request",
+          detail: "An error was happen trying to get people."
+        };
+        var result = {};
+        result.errors = [];
+        result.errors.push(errorObject);
+        res.send(400, result);
+        return next();
+      });
   });
 
   server.post('/people', function (req, res, next) {
-    try {
-      res.send(201, db.people.insertOne(req.body));
+    if (res.statusCode >= 400) {
       return next();
     }
-    catch (error){
-      var errorObject = {
-        code: error,
-        title: "Bad Request",
-        detail: "An error was happen trying to save a new Person."
-      };
-      var result = {};
-      result.errors = [];
-      result.errors.push(errorObject);
-      res.send(400, result);
-      return next();
-    }
+    
+    db.people.insertOne(req.body)
+      .then(function (result) {
+        res.send(201, result);
+        return next();
+      })
+      .catch(function (error) {
+        var errorObject = {
+          code: error,
+          title: "Bad Request",
+          detail: "An error was happen trying to save a new Person."
+        };
+        var result = {};
+        result.errors = [];
+        result.errors.push(errorObject);
+        res.send(400, result);
+        return next();
+      });
   });
 }
 

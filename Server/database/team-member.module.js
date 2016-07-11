@@ -32,6 +32,48 @@ var lastTeamMemberId = 0;
 }*/
 
 function add(teamMember) {
+  if (!members) {
+    return Promise.reject({message: 'Error, something was happened with members collection.'});
+  }
+
+  return Promise.resolve()
+    .then(function () {
+      if (teamMember.EmployeeId > 0) {
+        return employeeModule.find({_id: teamMember.EmployeeId});
+      }
+    })
+    .then(function (result) {
+      if (Array.isArray(result) && !result.length) {
+        return Promise.reject({message: 'Error, not exist an employee with this key.'});
+      }
+
+      if (result === undefined) {
+        teamMember.EmployeeId = null;
+      }
+
+      if (teamMember.TeamId > 0) {
+        return teamModule.find({_id: teamMember.TeamId});
+      }
+    })
+    .then(function (result) {
+      if (Array.isArray(result) && !result.length) {
+        return Promise.reject({message: 'Error, not exist a team with this key.'});
+      }
+
+      if (result === undefined) {
+        teamMember.TeamId = null;
+      }
+  
+      teamMember._id = ++lastTeamMemberId;
+      members.push(teamMember);
+      return Promise.resolve(teamMember);
+    })
+    .catch(function (error) {
+      return Promise.reject(error);
+    });
+/*
+
+
   return new Promise(function (resolve, reject) {
     if (!members) {
       return reject({message: 'Error, something was happened with members collection.'});
@@ -70,7 +112,7 @@ function add(teamMember) {
     teamMember._id = ++lastTeamMemberId;
     members.push(teamMember);
     return resolve(teamMember);
-  });
+  });*/
 }
 
 function find(parameters) {
