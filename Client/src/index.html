@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="roomManager">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Manager</title>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Hi all</h1>
+
+    <a href="#/people">People</a>
+
+    <div ng-view></div>
+
+    <!--npm and bower packages-->
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <!--<script src="../bower_components/underscore/underscore.js"></script>-->
+
+    <!--angular implementation-->
+    <script src="common/common.module.js"></script>
+    <script src="common/base-url.constant.js"></script>
+    <script src="common/third-party-dependencies.module.js"></script>
+    <script src="main.module.js"></script>
+    <script src="main.config.js"></script>
+    <script src="people/person.module.js"></script>
+    <script src="people/person-rest.service.js"></script>
+    <script src="people/person.config.js"></script>
+    <script src="people/person.controller.js"></script>
+</body>
+</html>

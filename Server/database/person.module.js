@@ -9,14 +9,14 @@ var lastPersonId = 0;
   var jsonResult = {
     data: []
   };
-  persons.forEach(function (person) {
+  persons.forEach(function (people) {
     var copyPerson = {
-      id: '' + person.PersonId,
+      id: '' + people.PersonId,
       type: 'Person',
       attributes: {
-        FirstName: person.FirstName,
-        LastName: person.LastName,
-        CI: person.CI
+        FirstName: people.FirstName,
+        LastName: people.LastName,
+        CI: people.CI
       },
       relationships: {}
     };

@@ -43,7 +43,7 @@ function add(employee) {
     })
     .then(function (result) {
       if (Array.isArray(result) && !result.length) {
-        return Promise.reject({message: 'Error, not exist a person with this key.'});
+        return Promise.reject({message: 'Error, not exist a people with this key.'});
       }
 
       if (result === undefined) {

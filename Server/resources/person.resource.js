@@ -2,7 +2,7 @@
  * Created by Luis Montero on 7/5/2016.
  */
 'use strict';
-//var personModule = require('../database/person.module');
+//var personModule = require('../database/people.module');
 //var db = require('../database/database').createDatabase();
 
 /*function getFunction(req, res, next) {
