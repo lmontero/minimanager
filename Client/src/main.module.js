@@ -8,6 +8,7 @@
       'common',
       'person',
       'team',
+      'room',
       'common.thirdPartyDependencies'
     ]);
 })();

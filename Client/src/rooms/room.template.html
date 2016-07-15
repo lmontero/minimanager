@@ -1,0 +1,37 @@
+<link href="/rooms/room.style.css" rel="stylesheet">
+
+<h1>MANAGE ROOMS</h1>
+<div class="createRoom">
+    <div class="rname">
+        <label>Room Name: </label><input type="text" ng-model="vm.room.RoomName" id="rNameId">
+    </div>
+    <div class="location">
+        <label>Location: </label><input type="text" ng-model="vm.room.Location">
+    </div>
+    <div class="alevel">
+        <label>Access Level: </label><input type="text" ng-model="vm.room.AccessLevel">
+    </div>
+    <div class="capacity">
+        <label>Capacity: </label><input type="text" ng-model="vm.room.Capacity">
+    </div>
+    <div class="save">
+        <input type="submit" ng-click="vm.saveRoom()" value="Create">
+    </div>
+</div>
+
+<div class="roomsList">
+    <div class="roomsHeader">
+        <div>ID</div>
+        <div>ROOM NAME</div>
+        <div>LOCATION</div>
+        <div>ACCESS LEVEL</div>
+        <div>CAPACITY</div>
+    </div>
+    <div class="roomsRow" ng-repeat="room in vm.rooms">
+        <div>{{ room._id }}</div>
+        <div>{{ room.attributes.RoomName }}</div>
+        <div>{{ room.attributes.Location }}</div>
+        <div>{{ room.attributes.AccessLevel }}</div>
+        <div>{{ room.attributes.Capacity }}</div>
+    </div>
+</div>

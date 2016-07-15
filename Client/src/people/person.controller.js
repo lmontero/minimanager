@@ -19,9 +19,9 @@
   
     setFocus('fNameId');
     var person = {
-      firstName: '',
-      lastName: '',
-      ci: ''
+      FirstName: '',
+      LastName: '',
+      CI: ''
     };
     
     vm.person = person;
@@ -40,9 +40,9 @@
     };
 
     function clearFields() {
-      person.firstName = '';
-      person.lastName = '';
-      person.ci = '';
+      person.FirstName = '';
+      person.LastName = '';
+      person.CI = '';
     }
     
     function setFocus(id) {

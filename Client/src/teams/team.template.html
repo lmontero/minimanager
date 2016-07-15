@@ -3,10 +3,10 @@
 <h1>MANAGE TEAMS</h1>
 <div class="createTeam">
     <div class="tname">
-        <label>Team Name: </label><input type="text" ng-model="vm.team.teamName" id="tNameId">
+        <label>Team Name: </label><input type="text" ng-model="vm.team.TeamName" id="tNameId">
     </div>
     <div class="tlevel">
-        <label>Team Level: </label><input type="text" ng-model="vm.team.teamLevel">
+        <label>Team Level: </label><input type="text" ng-model="vm.team.TeamLevel">
     </div>
     <div class="save">
         <input type="submit" ng-click="vm.saveTeam()" value="Create">
@@ -21,7 +21,7 @@
     </div>
     <div class="teamsRow" ng-repeat="team in vm.teams">
         <div>{{ team._id }}</div>
-        <div>{{ team.attributes.teamName }}</div>
-        <div>{{ team.attributes.teamLevel }}</div>
+        <div>{{ team.attributes.TeamName }}</div>
+        <div>{{ team.attributes.TeamLevel }}</div>
     </div>
 </div>

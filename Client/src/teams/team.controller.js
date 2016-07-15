@@ -19,8 +19,8 @@
 
     setFocus('tNameId');
     var team = {
-      teamName: '',
-      teamLevel: ''
+      TeamName: '',
+      TeamLevel: ''
     };
 
     vm.team = team;
@@ -39,8 +39,8 @@
     };
     
     function clearFields() {
-      team.teamName = '';
-      team.teamLevel = '';
+      team.TeamName = '';
+      team.TeamLevel = '';
     }
     
     function setFocus(id) {

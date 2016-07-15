@@ -10,14 +10,14 @@
         <h1>Room Manager Jr.</h1>
 
         <ul class="menu">
-            <li><a href="#home">Home</a></li>
+            <li><a href="#/home">Home</a></li>
             <li><a href="#/people">People</a></li>
-            <li><a href="#/people">Employees</a></li>
+            <li><a href="#/">Employees</a></li>
             <li><a href="#/teams">Teams</a></li>
-            <li><a href="#/people">Components</a></li>
-            <li><a href="#/people">Rooms</a></li>
-            <li><a href="#/people">Members</a></li>
-            <li><a href="#/people">Schedules</a></li>
+            <li><a href="#/">Components</a></li>
+            <li><a href="#/rooms">Rooms</a></li>
+            <li><a href="#/">Members</a></li>
+            <li><a href="#/">Schedules</a></li>
         </ul>
 
 
@@ -27,14 +27,15 @@
         <script src="../bower_components/angular/angular.js"></script>
         <script src="../bower_components/angular-resource/angular-resource.js"></script>
         <script src="../bower_components/angular-route/angular-route.js"></script>
-        <!--<script src="../bower_components/underscore/underscore.js"></script>-->
+        <!--End of npm and bower packages-->
 
-        <!--angular implementation-->
+        <!--Starting angular implementation-->
         <script src="common/common.module.js"></script>
         <script src="common/base-url.constant.js"></script>
         <script src="common/third-party-dependencies.module.js"></script>
         <script src="main.module.js"></script>
         <script src="main.config.js"></script>
+        <!--Ending angular implementation-->
 
         <!--Starting people module-->
         <script src="people/person.module.js"></script>
@@ -43,11 +44,18 @@
         <script src="people/person.controller.js"></script>
         <!--Ending people module-->
 
-        <!--Starting people module-->
+        <!--Starting teams module-->
         <script src="teams/team.module.js"></script>
         <script src="teams/team-rest.service.js"></script>
         <script src="teams/team.config.js"></script>
         <script src="teams/team.controller.js"></script>
-        <!--Ending people module-->
+        <!--Ending teams module-->
+
+        <!--Starting rooms module-->
+        <script src="rooms/room.module.js"></script>
+        <script src="rooms/room-rest.service.js"></script>
+        <script src="rooms/room.config.js"></script>
+        <script src="rooms/room.controller.js"></script>
+        <!--Ending rooms module-->
     </body>
 </html>

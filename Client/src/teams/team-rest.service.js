@@ -13,11 +13,12 @@
   ];
 
   function teamRestService($resource, BASE_URL) {
+    var url = BASE_URL + '/teams';
+    
     function getAllTeams() {
-      var teamsResource = $resource(BASE_URL + '/teams', {}, {
+      var teamsResource = $resource(url, {}, {
         get: {
           method: 'GET',
-          isArray: false,
           headers: { 'Content-Type': 'application/json' },
           data: null
         }
@@ -27,7 +28,7 @@
     }
 
     function postTeam(team) {
-      var teamsResource = $resource(BASE_URL + '/teams', {}, {
+      var teamsResource = $resource(url, {}, {
         post: {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }

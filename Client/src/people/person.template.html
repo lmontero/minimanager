@@ -3,13 +3,13 @@
 <h1>MANAGE PEOPLE</h1>
 <div class="createPerson">
     <div class="fname">
-        <label>First Name: </label><input type="text" ng-model="vm.person.firstName" id="fNameId">
+        <label>First Name: </label><input type="text" ng-model="vm.person.FirstName" id="fNameId">
     </div>
     <div class="lname">
-        <label>Last Name: </label><input type="text" ng-model="vm.person.lastName">
+        <label>Last Name: </label><input type="text" ng-model="vm.person.LastName">
     </div>
     <div class="ci">
-        <label>CI: </label><input type="text" ng-model="vm.person.ci">
+        <label>CI: </label><input type="text" ng-model="vm.person.CI">
     </div>
     <div class="save">
         <input type="submit" ng-click="vm.savePerson()" value="Create">
@@ -25,8 +25,8 @@
     </div>
     <div class="peopleRow" ng-repeat="person in vm.people">
         <div>{{ person._id }}</div>
-        <div>{{ person.attributes.firstName }}</div>
-        <div>{{ person.attributes.lastName }}</div>
-        <div>{{ person.attributes.ci }}</div>
+        <div>{{ person.attributes.FirstName }}</div>
+        <div>{{ person.attributes.LastName }}</div>
+        <div>{{ person.attributes.CI }}</div>
     </div>
 </div>

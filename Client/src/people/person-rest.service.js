@@ -13,11 +13,12 @@
   ];
 
   function personRestService($resource, BASE_URL) {
+    var url = BASE_URL + '/people';
+    
     function getAllPeople() {
-      var peopleResource = $resource(BASE_URL + '/people', {}, {
+      var peopleResource = $resource(url, {}, {
         get: {
           method: 'GET',
-          isArray: false,
           headers: { 'Content-Type': 'application/json' },
           data: null
         }
@@ -27,7 +28,7 @@
     }
     
     function postPerson(person) {
-      var peopleResource = $resource(BASE_URL + '/people', {}, {
+      var peopleResource = $resource(url, {}, {
         post: {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }

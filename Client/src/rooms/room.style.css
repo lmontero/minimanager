@@ -1,0 +1,32 @@
+.createRoom {
+    border: 2px solid;
+    margin: 10px 2px 2px;
+    padding: 2px;
+}
+
+.roomsList {
+    border: 2px solid;
+    margin: 2px;
+    padding: 2px;
+    display: table;
+}
+
+.roomsHeader {
+    display: table-row;
+    font-weight: bold;
+}
+
+.roomsHeader div {
+    display: table-cell;
+    padding: 0 10px;
+    border-bottom: 2px solid;
+}
+
+.roomsRow {
+    display: table-row;
+}
+
+.roomsRow div {
+    display: table-cell;
+    padding: 0 10px;
+}

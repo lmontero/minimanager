@@ -22,6 +22,8 @@ require('./middlewares/content-type.middleware')(server);
 //Resources or controllers.
 require('./resources/person.resource')(server, database);
 require('./resources/team.resource')(server, database);
+require('./resources/room.resource')(server, database);
+require('./resources/employee.resource')(server, database);
 
 
 
