@@ -15,3 +15,28 @@ time, mark, audio, video {
     padding: 0;
     border: 0;
 }
+
+.menu {
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+.menu li {
+    float: left;
+}
+
+.menu li a {
+    display: block;
+    /*background-color: black;*/
+    padding: 8px;
+    text-decoration: none;
+    color: white;
+}
+
+.menu li a:hover {
+    background-color: greenyellow;
+    color: darkslategrey;
+}

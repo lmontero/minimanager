@@ -29,6 +29,8 @@ function postFunction(req, res, next) {
   }
 }*/
 
+var parser = require('../util/parse.to.json');
+
 
 
 function execute(server, db) {
@@ -39,11 +41,12 @@ function execute(server, db) {
     
     db.people.find()
       .then(function (result) {
-        res.send(200, result);
+        var jsonObject = parser.parseSuccessMany(result, 'People');
+        res.send(200, jsonObject);
         return next();
       })
       .catch(function (error) {
-        console.log('error: ' + error);
+        /*console.log('error: ' + error);
         var errorObject = {
           code: error,
           title: "Bad Request",
@@ -51,8 +54,9 @@ function execute(server, db) {
         };
         var result = {};
         result.errors = [];
-        result.errors.push(errorObject);
-        res.send(400, result);
+        result.errors.push(errorObject);*/
+        var jsonObject = parser.parseError(error, 'Bad Request', 'An error was happen trying to get people.');
+        res.send(400, jsonObject);
         return next();
       });
   });
@@ -64,19 +68,13 @@ function execute(server, db) {
     
     db.people.insertOne(req.body)
       .then(function (result) {
-        res.send(201, result);
+        var jsonObject = parser.parseSuccessOne(result, 'People');
+        res.send(201, jsonObject);
         return next();
       })
       .catch(function (error) {
-        var errorObject = {
-          code: error,
-          title: "Bad Request",
-          detail: "An error was happen trying to save a new Person."
-        };
-        var result = {};
-        result.errors = [];
-        result.errors.push(errorObject);
-        res.send(400, result);
+        var jsonObject = parser.parseError(error, 'Bad Request', 'An error was happen trying to save a new Person.');
+        res.send(400, jsonObject);
         return next();
       });
   });

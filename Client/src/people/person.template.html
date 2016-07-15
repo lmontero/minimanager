@@ -1,3 +1,24 @@
-<div>
-    Here is persons
+<link href="/people/people.style.css" rel="stylesheet">
+
+<div class="createPerson">
+    <div class="fname">
+        <label>First Name: </label><input type="text" ng-model="person.firstName">
+    </div>
+    <div class="lname">
+        <label>Last Name: </label><input type="text" ng-model="person.lastName">
+    </div>
+    <div class="ci">
+        <label>CI: </label><input type="text" ng-model="person.ci">
+    </div>
+    <div class="save">
+        <input type="button" ng-click="savePerson()" value="Create">
+    </div>
 </div>
+
+
+<ul class="peopleList">
+    <li><div>ID</div> <div>FIRST NAME</div> <div>LAST NAME</div> <div>CI</div></li>
+    <li ng-repeat="person in people">
+        <div>{{ person._id }}</div> <div>{{ person.attributes.firstName }}</div> <div>{{ person.attributes.lastName }}</div> <div>{{ person.attributes.ci }}</div>
+    </li>
+</ul>

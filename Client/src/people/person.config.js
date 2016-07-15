@@ -21,6 +21,15 @@
       controller: 'PersonController',
       controllerAs: 'vm'
     });*/
+  
+    //$resourceProvider.defaults.stripTrailingSlashes = false;
+  
+    /*$resourceProvider.defaults.actions.getAll = {
+      method: 'GET',
+      isArray: true,
+      headers: { 'Content-Type': 'application/json' }
+    };*/
+    
 
     $routeProvider
       .when('/people', {
@@ -29,12 +38,16 @@
         controllerAs: 'vm',
         resolve: {
           people: function (personRestService) {
-            return personRestService.getPeople()
+            return personRestService.getList()
               .then(function (result) {
                 console.log('success');
                 console.log(result);
-                return result.data;
-              });
+                return result;
+              })
+              /*.catch(function (error) {
+                console.log(error);
+                return error;
+              })*/;
           }
         }
       });
