@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="roomManager">
-<head>
-    <meta charset="UTF-8">
-    <title>Room Manager</title>
-    <link href="css/style.css" rel="stylesheet">
-</head>
-<body>
-    <h1>Room Manager Jr.</h1>
+    <head>
+        <meta charset="UTF-8">
+        <title>Room Manager</title>
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="icon" href="fav.png" type="image/x-icon" />
+    </head>
+    <body>
+        <h1>Room Manager Jr.</h1>
 
-    <ul class="menu">
-        <li><a href="#/people">People</a></li>
-        <li><a href="#/people">Employees</a></li>
-        <li><a href="#/people">Teams</a></li>
-        <li><a href="#/people">Components</a></li>
-        <li><a href="#/people">Rooms</a></li>
-        <li><a href="#/people">Members</a></li>
-        <li><a href="#/people">Schedules</a></li>
-    </ul>
+        <ul class="menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#/people">People</a></li>
+            <li><a href="#/people">Employees</a></li>
+            <li><a href="#/teams">Teams</a></li>
+            <li><a href="#/people">Components</a></li>
+            <li><a href="#/people">Rooms</a></li>
+            <li><a href="#/people">Members</a></li>
+            <li><a href="#/people">Schedules</a></li>
+        </ul>
 
 
-    <div ng-view></div>
+        <div ng-view></div>
 
-    <!--npm and bower packages-->
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/angular-resource/angular-resource.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
-    <!--<script src="../bower_components/underscore/underscore.js"></script>-->
+        <!--npm and bower packages-->
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-resource/angular-resource.js"></script>
+        <script src="../bower_components/angular-route/angular-route.js"></script>
+        <!--<script src="../bower_components/underscore/underscore.js"></script>-->
 
-    <!--angular implementation-->
-    <script src="common/common.module.js"></script>
-    <script src="common/base-url.constant.js"></script>
-    <script src="common/third-party-dependencies.module.js"></script>
-    <script src="main.module.js"></script>
-    <script src="main.config.js"></script>
-    <script src="people/person.module.js"></script>
-    <script src="people/person-rest.service.js"></script>
-    <script src="people/person.config.js"></script>
-    <script src="people/person.controller.js"></script>
-</body>
+        <!--angular implementation-->
+        <script src="common/common.module.js"></script>
+        <script src="common/base-url.constant.js"></script>
+        <script src="common/third-party-dependencies.module.js"></script>
+        <script src="main.module.js"></script>
+        <script src="main.config.js"></script>
+
+        <!--Starting people module-->
+        <script src="people/person.module.js"></script>
+        <script src="people/person-rest.service.js"></script>
+        <script src="people/person.config.js"></script>
+        <script src="people/person.controller.js"></script>
+        <!--Ending people module-->
+
+        <!--Starting people module-->
+        <script src="teams/team.module.js"></script>
+        <script src="teams/team-rest.service.js"></script>
+        <script src="teams/team.config.js"></script>
+        <script src="teams/team.controller.js"></script>
+        <!--Ending people module-->
+    </body>
 </html>

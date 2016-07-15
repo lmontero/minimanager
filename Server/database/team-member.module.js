@@ -9,28 +9,6 @@ var teamModule = require('./team.module');
 var members= [];
 var lastTeamMemberId = 0;
 
-/*function getAll() {
-  var jsonResult = {
-    data: []
-  };
-  teamMembers.forEach(function (teamMember) {
-    var copyTeamMember = {
-      id: '' + teamMember.TeamMemberId,
-      type: 'TeamMember',
-      attributes: {
-        StartingDate: teamMember.StartingDate,
-        EndingDate: teamMember.EndingDate,
-        EmployeeId: teamMember.EmployeeId,
-        TeamId: teamMember.TeamId
-      },
-      relationships: {}
-    };
-    jsonResult.data.push(copyTeamMember);
-  });
-
-  return jsonResult;
-}*/
-
 function add(teamMember) {
   if (!members) {
     return Promise.reject({message: 'Error, something was happened with members collection.'});
@@ -71,48 +49,6 @@ function add(teamMember) {
     .catch(function (error) {
       return Promise.reject(error);
     });
-/*
-
-
-  return new Promise(function (resolve, reject) {
-    if (!members) {
-      return reject({message: 'Error, something was happened with members collection.'});
-    }
-
-    if (teamMember.EmployeeId > 0) {
-      employeeModule.find({_id: teamMember.EmployeeId})
-        .then(function (result) {
-          if (!result.length) {
-            return reject({message: 'Error, not exist an employee with this key.'});
-          }
-        })
-        .catch(function (error) {
-          return reject(error);
-        });
-    }
-    else {
-      teamMember.EmployeeId = null;
-    }
-
-    if (teamMember.TeamId > 0) {
-      teamModule.find({_id: teamMember.TeamId})
-        .then(function (result) {
-          if (! result.length) {
-            return reject({message: 'Error, not exist a team with this key.'});
-          }
-        })
-        .catch(function (error) {
-          return reject(error);
-        });
-    }
-    else {
-      teamMember.TeamId = null;
-    }
-
-    teamMember._id = ++lastTeamMemberId;
-    members.push(teamMember);
-    return resolve(teamMember);
-  });*/
 }
 
 function find(parameters) {

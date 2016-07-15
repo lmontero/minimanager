@@ -13,18 +13,9 @@
   ];
 
   function configFunction($routeProvider, $resourceProvider) {
-    //RestangularProvider.setBaseUrl(BASE_URL);
-    //console.log($routeProvider);
-    //console.log($resourceProvider);
     $resourceProvider.defaults.stripTrailingSlashes = false;
 
-    /*$resourceProvider.defaults.actions.getAll = {
-      method: 'GET',
-      isArray: true,
-      headers: { 'Content-Type': 'application/json' }
-    };*/
-    
-    $routeProvider.when('home', {
+    $routeProvider.when('/home', {
       url: ''
     });
   }

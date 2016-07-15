@@ -1,24 +1,32 @@
 <link href="/people/people.style.css" rel="stylesheet">
 
+<h1>MANAGE PEOPLE</h1>
 <div class="createPerson">
     <div class="fname">
-        <label>First Name: </label><input type="text" ng-model="person.firstName">
+        <label>First Name: </label><input type="text" ng-model="vm.person.firstName" id="fNameId">
     </div>
     <div class="lname">
-        <label>Last Name: </label><input type="text" ng-model="person.lastName">
+        <label>Last Name: </label><input type="text" ng-model="vm.person.lastName">
     </div>
     <div class="ci">
-        <label>CI: </label><input type="text" ng-model="person.ci">
+        <label>CI: </label><input type="text" ng-model="vm.person.ci">
     </div>
     <div class="save">
-        <input type="button" ng-click="savePerson()" value="Create">
+        <input type="submit" ng-click="vm.savePerson()" value="Create">
     </div>
 </div>
 
-
-<ul class="peopleList">
-    <li><div>ID</div> <div>FIRST NAME</div> <div>LAST NAME</div> <div>CI</div></li>
-    <li ng-repeat="person in people">
-        <div>{{ person._id }}</div> <div>{{ person.attributes.firstName }}</div> <div>{{ person.attributes.lastName }}</div> <div>{{ person.attributes.ci }}</div>
-    </li>
-</ul>
+<div class="peopleList">
+    <div class="peopleHeader">
+        <div>ID</div>
+        <div>FIRST NAME</div>
+        <div>LAST NAME</div>
+        <div>CI</div>
+    </div>
+    <div class="peopleRow" ng-repeat="person in vm.people">
+        <div>{{ person._id }}</div>
+        <div>{{ person.attributes.firstName }}</div>
+        <div>{{ person.attributes.lastName }}</div>
+        <div>{{ person.attributes.ci }}</div>
+    </div>
+</div>

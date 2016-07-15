@@ -8,26 +8,6 @@ var roomModule = require('./room.module');
 var components = [];
 var lastComponentId = 0;
 
-/*function getAll() {
-  var jsonResult = {
-    data: []
-  };
-  components.forEach(function (component) {
-    var copyRoom = {
-      id: '' + component.ComponentId,
-      type: 'Component',
-      attributes: {
-        ComponentName: component.ComponentName,
-        RoomId: component.RoomId
-      },
-      relationships: {}
-    };
-    jsonResult.data.push(copyRoom);
-  });
-
-  return jsonResult;
-}*/
-
 function add(component) {
   if (!components) {
     return Promise.reject({message: 'Error, something was happened with components collection.'});
@@ -83,5 +63,3 @@ module.exports = {
   find: find,
   insertOne: add
 };
-
-//las funciones que se exponen cambiar a nombres standard de mongoose

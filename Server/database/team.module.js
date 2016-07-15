@@ -5,26 +5,6 @@
 var teams = [];
 var lastTeamId = 0;
 
-/*function getAll() {
-  var jsonResult = {
-    data: []
-  };
-  teams.forEach(function (team) {
-    var copyTeam = {
-      id: '' + team.TeamId,
-      type: 'Team',
-      attributes: {
-        TeamName: team.TeamName,
-        TeamLevel: team.TeamLevel
-      },
-      relationships: {}
-    };
-    jsonResult.data.push(copyTeam);
-  });
-  
-  return jsonResult;
-}*/
-
 function add(team) {
   return new Promise(function (resolve, reject) {
     if (!teams) {

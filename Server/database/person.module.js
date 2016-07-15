@@ -5,27 +5,6 @@
 var people = [];
 var lastPersonId = 0;
 
-/*function getAll() {
-  var jsonResult = {
-    data: []
-  };
-  persons.forEach(function (people) {
-    var copyPerson = {
-      id: '' + people.PersonId,
-      type: 'Person',
-      attributes: {
-        FirstName: people.FirstName,
-        LastName: people.LastName,
-        CI: people.CI
-      },
-      relationships: {}
-    };
-    jsonResult.data.push(copyPerson);
-  });
-
-  return jsonResult;
-}*/
-
 function add(person) {
   return new Promise(function (resolve, reject) {
     if (!people) {
@@ -64,7 +43,3 @@ module.exports = {
   insertOne: add,
   find: find
 };
-
-//Controlar los errores, que las funciones no devuelvan true o false.
-//http://jsonapi.org/ revisar esta pagina para el formato de los objetos json
-//websockets reconecciones investigar

@@ -1,32 +1,32 @@
-.createPerson {
+.createTeam {
     border: 2px solid;
     margin: 10px 2px 2px;
     padding: 2px;
 }
 
-.peopleList {
+.teamsList {
     border: 2px solid;
     margin: 2px;
     padding: 2px;
     display: table;
 }
 
-.peopleHeader {
+.teamsHeader {
     display: table-row;
     font-weight: bold;
 }
 
-.peopleHeader div {
+.teamsHeader div {
     display: table-cell;
     padding: 0 10px;
     border-bottom: 2px solid;
 }
 
-.peopleRow {
+.teamsRow {
     display: table-row;
 }
 
-.peopleRow div {
+.teamsRow div {
     display: table-cell;
     padding: 0 10px;
 }

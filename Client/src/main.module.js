@@ -7,6 +7,7 @@
     .module('roomManager', [
       'common',
       'person',
+      'team',
       'common.thirdPartyDependencies'
     ]);
 })();

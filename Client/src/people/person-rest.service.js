@@ -13,11 +13,8 @@
   ];
 
   function personRestService($resource, BASE_URL) {
-    console.log('people rest');
-    
     function getAllPeople() {
-      
-      var people = $resource(BASE_URL + '/people', {}, {
+      var peopleResource = $resource(BASE_URL + '/people', {}, {
         get: {
           method: 'GET',
           isArray: false,
@@ -26,18 +23,18 @@
         }
       });
       
-      return people.get().$promise;
+      return peopleResource.get().$promise;
     }
     
     function postPerson(person) {
-      var people = $resource(BASE_URL + '/people', {}, {
+      var peopleResource = $resource(BASE_URL + '/people', {}, {
         post: {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         }
       });
   
-      return people.post(person).$promise;
+      return peopleResource.post(person).$promise;
     }
     
     return {

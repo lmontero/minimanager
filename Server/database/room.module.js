@@ -5,28 +5,6 @@
 var rooms = [];
 var lastRoomId = 0;
 
-/*function getAll() {
-  var jsonResult = {
-    data: []
-  };
-  rooms.forEach(function (room) {
-    var copyRoom = {
-      id: '' + room.RoomId,
-      type: 'Room',
-      attributes: {
-        RoomName: room.RoomName,
-        AccessLevel: room.AccessLevel,
-        Location: room.Location,
-        Capacity: room.Capacity
-      },
-      relationships: {}
-    };
-    jsonResult.data.push(copyRoom);
-  });
-
-  return jsonResult;
-}*/
-
 function add(room) {
   return new Promise(function (resolve, reject) {
     if (!rooms) {

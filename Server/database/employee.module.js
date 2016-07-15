@@ -8,28 +8,6 @@ var personModule = require('./person.module');
 var employees= [];
 var lastEmployeeId = 0;
 
-/*function getAll() {
-  var jsonResult = {
-    data: []
-  };
-  employees.forEach(function (employee) {
-    var copyEmployee = {
-      id: '' + employee.EmployeeId,
-      type: 'Employee',
-      attributes: {
-        Code: employee.Code,
-        StartingDate: employee.StartingDate,
-        EndingDate: employee.EndingDate,
-        PersonId: employee.PersonId
-      },
-      relationships: {}
-    };
-    jsonResult.data.push(copyEmployee);
-  });
-
-  return jsonResult;
-}*/
-
 function add(employee) {
   if (!employees) {
     return Promise.reject({message: 'Error, something was happened with employees collection.'});

@@ -8,39 +8,48 @@
     .controller('PersonController', PersonController);
 
   PersonController.$inject = [
-    '$scope',
     'people',
-    'personRestService'
+    'personRestService',
+    '$window'
   ];
 
-  function PersonController($scope, people, personRestService) {
-    console.log(people);
-    console.log('people controller');
-    
-    $scope.people = people.data;
-    
-    var fName = '';
-    var lName = '';
-    var cii = '';
-    
-    $scope.person = {
-      firstName: fName,
-      lastName: lName,
-      ci: cii
+  function PersonController(people, personRestService, $window) {
+    var vm = this;
+    vm.people = people.data;
+  
+    setFocus('fNameId');
+    var person = {
+      firstName: '',
+      lastName: '',
+      ci: ''
     };
     
-    $scope.savePerson = function () {
-      console.log('saving person...');
-      console.log(personRestService);
-      personRestService.post($scope.person)
+    vm.person = person;
+    
+    vm.savePerson = function () {
+      personRestService.post(vm.person)
         .then(function (result) {
-          console.log('person post success...');
-
+          people.data.push(result.data);
+          clearFields();
+          setFocus('fNameId');
         })
         .catch(function (error) {
           console.log('person post failed...');
           console.log(error);
         });
+    };
+
+    function clearFields() {
+      person.firstName = '';
+      person.lastName = '';
+      person.ci = '';
+    }
+    
+    function setFocus(id) {
+      var element = $window.document.getElementById(id);
+      if (element) {
+        element.focus();
+      }
     }
   }
 })();

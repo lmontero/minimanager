@@ -2,47 +2,24 @@
  * Created by Luis Montero on 7/5/2016.
  */
 'use strict';
-/*function json(req, res, next) {
-  if (req.is('application/json')) {
-    return next();
-  }
-  var errorObject = {
-    code: "The content type header is not an application/json.",
-    title: "Not Acceptable Response",
-    detail: "The Header is wrong."
-  };
-  var result = {};
-  result.errors = [];
-  result.errors.push(errorObject);
-  res.send(406, result);
-  return next(err);
-}*/
-
+var parser = require('../util/parse.to.json');
 function execute(server) {
-  
-  //Content type Json.
   server.use(function (req, res, next) {
     if (req.is('application/json')) {
       console.log('is json.');
       return next();
     }
-    var errorObject = {
-      code: "The content type header is not an application/json.",
-      title: "Not Acceptable Response",
-      detail: "The Header is wrong."
-    };
-    var result = { errors: []};
-    result.errors.push(errorObject);
-    res.send(406, result);
+    
+    var jsonObject = parser.parseError(
+      'The request header content type is not an application/json.',
+      'Not Acceptable Request.',
+      'The header content type is wrong.'
+    );
+    
+    res.send(406, jsonObject);
     console.log('is not json.');
     return next();
   });
 }
 
-/*module.exports = {
-  jsonFunction: json
-};*/
-
 module.exports = execute;
-
-//cambiar a middleware
