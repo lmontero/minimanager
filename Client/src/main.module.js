@@ -9,6 +9,7 @@
       'person',
       'team',
       'room',
+      'employee',
       'common.thirdPartyDependencies'
     ]);
 })();

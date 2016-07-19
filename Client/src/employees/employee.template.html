@@ -1,0 +1,31 @@
+<link href="/employees/employee.style.css" rel="stylesheet">
+
+<h1>MANAGE EMPLOYEES</h1>
+<div class="createEmployee">
+    <div class="code">
+        <label>Code: </label><input type="text" ng-model="vm.employee.Code" id="codeId">
+    </div>
+    <div class="personid">
+        <label>Person Id: </label><input type="text" ng-model="vm.employee.PersonId">
+    </div>
+    <div class="save">
+        <input type="submit" ng-click="vm.saveEmployee()" value="Create">
+    </div>
+</div>
+
+<div class="employeesList">
+    <div class="employeesHeader">
+        <div>ID</div>
+        <div>CODE</div>
+        <div>STARTING DATE</div>
+        <div>ENDING DATE</div>
+        <div>PERSON ID</div>
+    </div>
+    <div class="employeesRow" ng-repeat="employee in vm.employees">
+        <div>{{ employee._id }}</div>
+        <div>{{ employee.attributes.Code }}</div>
+        <div>{{ employee.attributes.StartingDate }}</div>
+        <div>{{ employee.attributes.EndingDate }}</div>
+        <div>{{ employee.attributes.PersonId }}</div>
+    </div>
+</div>

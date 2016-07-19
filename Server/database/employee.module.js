@@ -4,6 +4,7 @@
 'use strict';
 
 var personModule = require('./person.module');
+var dateParser = require('../util/parse.date');
 
 var employees= [];
 var lastEmployeeId = 0;
@@ -29,6 +30,8 @@ function add(employee) {
       }
 
       employee._id = ++lastEmployeeId;
+      employee.StartingDate = dateParser.parseFromDateTimeToDate(new Date());
+      employee.EndingDate = null;
       employees.push(employee);
       return Promise.resolve(employee);
     })

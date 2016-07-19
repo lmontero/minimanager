@@ -27,10 +27,10 @@ function find(parameters) {
     }
 
     function filterFunction(person) {
-      return (parameters._id !== undefined ? parameters._id === person._id : true) &&
-        (parameters.FirstName !== undefined ? parameters.FirstName === person.FirstName : true) &&
-        (parameters.LastName !== undefined ? parameters.LastName === person.LastName : true) &&
-        (parameters.CI !== undefined ? parameters.CI === person.CI : true);
+      return (parameters._id !== undefined ? parameters._id == person._id : true) &&
+        (parameters.FirstName !== undefined ? parameters.FirstName == person.FirstName : true) &&
+        (parameters.LastName !== undefined ? parameters.LastName == person.LastName : true) &&
+        (parameters.CI !== undefined ? parameters.CI == person.CI : true);
     }
 
     var resultCollection = people.filter(filterFunction);

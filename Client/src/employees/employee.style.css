@@ -1,0 +1,32 @@
+.createEmployee {
+    border: 2px solid;
+    margin: 10px 2px 2px;
+    padding: 2px;
+}
+
+.employeesList {
+    border: 2px solid;
+    margin: 2px;
+    padding: 2px;
+    display: table;
+}
+
+.employeesHeader {
+    display: table-row;
+    font-weight: bold;
+}
+
+.employeesHeader div {
+    display: table-cell;
+    padding: 0 10px;
+    border-bottom: 2px solid;
+}
+
+.employeesRow {
+    display: table-row;
+}
+
+.employeesRow div {
+    display: table-cell;
+    padding: 0 10px;
+}

@@ -8,7 +8,7 @@ var cloner = require('./json.clone');
 function parseErrorFunction(data, title, detail) {
   return {
     errors: [{
-      code: data,
+      code: data.message,
       title: title,
       detail: detail
     }]
