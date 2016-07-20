@@ -9,13 +9,22 @@
 
   ScheduleController.$inject = [
     'schedules',
+    'rooms',
+    'teams',
     'scheduleRestService',
     '$window'
   ];
 
-  function ScheduleController(schedules, scheduleRestService, $window) {
+  const FirstPosition = 0;
+
+  function ScheduleController(schedules, rooms, teams, scheduleRestService, $window) {
     var vm = this;
     vm.schedules = schedules.data;
+    vm.teams = teams.data;
+    vm.rooms = rooms.data;
+    vm.selectedTeam = {};
+    vm.selectedRoom = {};
+    vm.minDateTime = new Date();
 
     setFocus('roomId');
     var schedule = {
@@ -24,10 +33,14 @@
       StartingDateTime: '',
       EndingDateTime: ''
     };
+    clearFields();
 
     vm.schedule = schedule;
 
     vm.saveSchedule = function () {
+      schedule.RoomId = '' + vm.selectedRoom._id;
+      schedule.TeamId = '' + vm.selectedTeam._id;
+
       scheduleRestService.post(vm.schedule)
         .then(function (result) {
           schedules.data.push(result.data);
@@ -41,8 +54,12 @@
     };
 
     function clearFields() {
-      schedule.RoomId = '';
-      schedule.TeamId = '';
+      if (vm.teams.length) {
+        vm.selectedTeam = vm.teams[FirstPosition];
+      }
+      if (vm.rooms.length) {
+        vm.selectedRoom = vm.rooms[FirstPosition];
+      }
       schedule.StartingDateTime = '';
       schedule.EndingDateTime = '';
     }

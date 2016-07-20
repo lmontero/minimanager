@@ -5,6 +5,7 @@
 
 var roomModule = require('./room.module');
 var teamModule = require('./team.module');
+var moment = require('moment');
 
 var schedules= [];
 var lastScheduleId = 0;
@@ -16,6 +17,12 @@ function add(schedule) {
 
   return Promise.resolve()
     .then(function () {
+      var start = moment(schedule.StartingDateTime, 'MM-DD-YYYY');
+      var end = moment(schedule.EndingDateTime, 'MM-DD-YYYY');
+      console.log(moment());
+      if (end.isBefore(start)) {
+        console.log('Start time is more than end time.');
+      }
       if (schedule.RoomId > 0) {
         return roomModule.find({_id: schedule.RoomId})
       }
@@ -26,7 +33,7 @@ function add(schedule) {
       }
 
       if (result === undefined) {
-        schedule.RoomId = null;
+        return Promise.reject({message: 'Error, the room id is mandatory.'});
       }
   
       if (schedule.TeamId > 0) {
@@ -39,7 +46,7 @@ function add(schedule) {
       }
       
       if (result === undefined) {
-        schedule.TeamId = null;
+        return Promise.reject({message: 'Error, the team id is mandatory.'});
       }
   
       schedule._id = ++lastScheduleId;

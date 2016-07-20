@@ -8,10 +8,18 @@
     .config(configFunction);
   
   configFunction.$inject = [
-    '$routeProvider'
+    '$routeProvider',
+    'momentPickerProvider'
   ];
   
-  function configFunction($routeProvider) {
+  function configFunction($routeProvider, momentPickerProvider) {
+    momentPickerProvider.options({
+      // Picker properties
+      locale: 'en',
+      minView: 'decade',
+      maxView: 'hour'
+    });
+
     $routeProvider
       .when('/schedules', {
         templateUrl: 'schedules/schedule.template.html',
@@ -20,6 +28,18 @@
         resolve: {
           schedules: function (scheduleRestService) {
             return scheduleRestService.getList()
+              .then(function (result) {
+                return result;
+              });
+          },
+          rooms: function (roomRestService) {
+            return roomRestService.getList()
+              .then(function (result) {
+                return result
+              });
+          },
+          teams: function (teamRestService) {
+            return teamRestService.getList()
               .then(function (result) {
                 return result;
               });

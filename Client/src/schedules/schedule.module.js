@@ -4,5 +4,8 @@
 (function () {
   'use strict';
   angular
-    .module('schedule', ['common.thirdPartyDependencies']);
+    .module('schedule', [
+      'common.thirdPartyDependencies',
+      'moment-picker'
+    ]);
 })();

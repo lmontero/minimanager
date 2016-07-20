@@ -1,18 +1,32 @@
 <link href="/schedules/schedule.style.css" rel="stylesheet">
+<link href="../../bower_components/angular-moment-picker/dist/angular-moment-picker.min.css" rel="stylesheet">
 
 <h1>MANAGE SCHEDULES</h1>
 <div class="createSchedule">
     <div class="roomid">
-        <label>Room Id: </label><input type="text" ng-model="vm.schedule.RoomId" id="roomId">
+        <label>Room: </label>
+        <select data-ng-options="room.attributes.RoomName for room in vm.rooms" data-ng-model="vm.selectedRoom"></select>
     </div>
     <div class="teamid">
-        <label>Team Id: </label><input type="text" ng-model="vm.schedule.TeamId">
+        <label>Team: </label>
+        <select data-ng-options="team.attributes.TeamName for team in vm.teams" data-ng-model="vm.selectedTeam"></select>
     </div>
     <div class="startingdatetime">
-        <label>Starting Date Time: </label><input type="text" ng-model="vm.schedule.StartingDateTime">
+        <label>Starting Date Time: </label>
+        <input class="form-control"
+               ng-model="vm.schedule.StartingDateTime"
+               placeholder="Select a date..."
+               min-date="vm.minDateTime"
+               max-date="vm.schedule.EndingDateTime"
+               moment-picker="vm.schedule.StartingDateTime">
     </div>
     <div class="endingdatetime">
-        <label>Ending Date Time: </label><input type="text" ng-model="vm.schedule.EndingDateTime">
+        <label>Ending Date Time: </label>
+        <input class="form-control"
+               ng-model="vm.schedule.EndingDateTime"
+               placeholder="Select a date..."
+               min-date="vm.schedule.StartingDateTime ? vm.schedule.StartingDateTime : vm.minDateTime"
+               moment-picker="vm.schedule.EndingDateTime">
     </div>
     <div class="save">
         <input type="submit" ng-click="vm.saveSchedule()" value="Create">
