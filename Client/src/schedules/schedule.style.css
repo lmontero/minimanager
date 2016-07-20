@@ -1,0 +1,32 @@
+.createSchedule {
+    border: 2px solid;
+    margin: 10px 2px 2px;
+    padding: 2px;
+}
+
+.schedulesList {
+    border: 2px solid;
+    margin: 2px;
+    padding: 2px;
+    display: table;
+}
+
+.schedulesHeader {
+    display: table-row;
+    font-weight: bold;
+}
+
+.schedulesHeader div {
+    display: table-cell;
+    padding: 0 10px;
+    border-bottom: 2px solid;
+}
+
+.schedulesRow {
+    display: table-row;
+}
+
+.schedulesRow div {
+    display: table-cell;
+    padding: 0 10px;
+}

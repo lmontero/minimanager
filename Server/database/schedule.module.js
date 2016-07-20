@@ -63,11 +63,11 @@ function find(parameters) {
     }
 
     function filterFunction(schedule) {
-      return (parameters._id !== undefined ? parameters._id === schedule._id : true) &&
-        (parameters.RoomId !== undefined ? parameters.RoomId === schedule.RoomId : true) &&
-        (parameters.TeamId !== undefined ? parameters.TeamId === schedule.TeamId : true) &&
-        (parameters.StartingDateTime !== undefined ? parameters.StartingDateTime === schedule.StartingDateTime : true) &&
-        (parameters.EndingDateTime !== undefined ? parameters.EndingDateTime === schedule.EndingDateTime : true);
+      return (parameters._id !== undefined ? parameters._id == schedule._id : true) &&
+        (parameters.RoomId !== undefined ? parameters.RoomId == schedule.RoomId : true) &&
+        (parameters.TeamId !== undefined ? parameters.TeamId == schedule.TeamId : true) &&
+        (parameters.StartingDateTime !== undefined ? parameters.StartingDateTime == schedule.StartingDateTime : true) &&
+        (parameters.EndingDateTime !== undefined ? parameters.EndingDateTime == schedule.EndingDateTime : true);
     }
 
     var resultCollection = schedules.filter(filterFunction);

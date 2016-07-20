@@ -16,7 +16,7 @@
     var url = BASE_URL + '/employees';
 
     function getAllEmployees() {
-      var employeeResource = $resource(url, {}, {
+      var employeesResource = $resource(url, {}, {
         get: {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -24,7 +24,7 @@
         }
       });
 
-      return employeeResource.get().$promise;
+      return employeesResource.get().$promise;
     }
 
     function postEmployee(employee) {
@@ -41,6 +41,6 @@
     return {
       getList: getAllEmployees,
       post: postEmployee
-    }
+    };
   }
 })();

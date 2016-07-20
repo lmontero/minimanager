@@ -1,0 +1,27 @@
+<link href="/components/component.style.css" rel="stylesheet">
+
+<h1>MANAGE COMPONENTS</h1>
+<div class="createComponent">
+    <div class="code">
+        <label>Name: </label><input type="text" ng-model="vm.component.Name" id="nameId">
+    </div>
+    <div class="roomid">
+        <label>Room Id: </label><input type="text" ng-model="vm.component.RoomId">
+    </div>
+    <div class="save">
+        <input type="submit" ng-click="vm.saveComponent()" value="Create">
+    </div>
+</div>
+
+<div class="componentsList">
+    <div class="componentsHeader">
+        <div>ID</div>
+        <div>NAME</div>
+        <div>ROOM ID</div>
+    </div>
+    <div class="componentsRow" ng-repeat="component in vm.components">
+        <div>{{ component._id }}</div>
+        <div>{{ component.attributes.Name }}</div>
+        <div>{{ component.attributes.RoomId }}</div>
+    </div>
+</div>

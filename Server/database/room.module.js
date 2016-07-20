@@ -28,11 +28,11 @@ function find(parameters) {
     }
   
     function filterFunction(room) {
-      return (parameters._id !== undefined ? parameters._id === room._id : true) &&
-        (parameters.RoomName !== undefined ? parameters.RoomName === room.RoomName : true) &&
-        (parameters.Location !== undefined ? parameters.Location === room.Location : true) &&
-        (parameters.Capacity !== undefined ? parameters.Capacity === room.Capacity : true) &&
-        (parameters.AccessLevel !== undefined ? parameters.AccessLevel === room.AccessLevel : true);
+      return (parameters._id !== undefined ? parameters._id == room._id : true) &&
+        (parameters.RoomName !== undefined ? parameters.RoomName == room.RoomName : true) &&
+        (parameters.Location !== undefined ? parameters.Location == room.Location : true) &&
+        (parameters.Capacity !== undefined ? parameters.Capacity == room.Capacity : true) &&
+        (parameters.AccessLevel !== undefined ? parameters.AccessLevel == room.AccessLevel : true);
     }
     
     var resultCollection = rooms.filter(filterFunction);

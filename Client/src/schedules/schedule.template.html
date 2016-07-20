@@ -1,0 +1,37 @@
+<link href="/schedules/schedule.style.css" rel="stylesheet">
+
+<h1>MANAGE SCHEDULES</h1>
+<div class="createSchedule">
+    <div class="roomid">
+        <label>Room Id: </label><input type="text" ng-model="vm.schedule.RoomId" id="roomId">
+    </div>
+    <div class="teamid">
+        <label>Team Id: </label><input type="text" ng-model="vm.schedule.TeamId">
+    </div>
+    <div class="startingdatetime">
+        <label>Starting Date Time: </label><input type="text" ng-model="vm.schedule.StartingDateTime">
+    </div>
+    <div class="endingdatetime">
+        <label>Ending Date Time: </label><input type="text" ng-model="vm.schedule.EndingDateTime">
+    </div>
+    <div class="save">
+        <input type="submit" ng-click="vm.saveSchedule()" value="Create">
+    </div>
+</div>
+
+<div class="schedulesList">
+    <div class="schedulesHeader">
+        <div>ID</div>
+        <div>ROOM ID</div>
+        <div>TEAM ID</div>
+        <div>STARTING DATE TIME</div>
+        <div>ENDING DATE TIME</div>
+    </div>
+    <div class="schedulesRow" ng-repeat="schedule in vm.schedules">
+        <div>{{ schedule._id }}</div>
+        <div>{{ schedule.attributes.RoomId }}</div>
+        <div>{{ schedule.attributes.TeamId }}</div>
+        <div>{{ schedule.attributes.StartingDateTime }}</div>
+        <div>{{ schedule.attributes.EndingDateTime }}</div>
+    </div>
+</div>

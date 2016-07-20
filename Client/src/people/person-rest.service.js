@@ -41,6 +41,6 @@
     return {
       getList: getAllPeople,
       post: postPerson
-    }
+    };
   }
 })();

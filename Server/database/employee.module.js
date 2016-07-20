@@ -51,11 +51,11 @@ function find(parameters) {
     }
 
     function filterFunction(employee) {
-      return (parameters._id !== undefined ? parameters._id === employee._id : true) &&
-        (parameters.Code !== undefined ? parameters.Code === employee.Code : true) &&
-        (parameters.PersonId !== undefined ? parameters.PersonId === employee.PersonId : true) &&
-        (parameters.StartingDate !== undefined ? parameters.StartingDate === employee.StartingDate : true) &&
-        (parameters.EndingDate !== undefined ? parameters.EndingDate === employee.EndingDate : true);
+      return (parameters._id !== undefined ? parameters._id == employee._id : true) &&
+        (parameters.Code !== undefined ? parameters.Code == employee.Code : true) &&
+        (parameters.PersonId !== undefined ? parameters.PersonId == employee.PersonId : true) &&
+        (parameters.StartingDate !== undefined ? parameters.StartingDate == employee.StartingDate : true) &&
+        (parameters.EndingDate !== undefined ? parameters.EndingDate == employee.EndingDate : true);
     }
 
     var resultCollection = employees.filter(filterFunction);

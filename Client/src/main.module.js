@@ -10,6 +10,9 @@
       'team',
       'room',
       'employee',
+      'component',
+      'member',
+      'schedule',
       'common.thirdPartyDependencies'
     ]);
 })();

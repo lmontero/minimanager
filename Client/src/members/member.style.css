@@ -1,0 +1,32 @@
+.createMember {
+    border: 2px solid;
+    margin: 10px 2px 2px;
+    padding: 2px;
+}
+
+.membersList {
+    border: 2px solid;
+    margin: 2px;
+    padding: 2px;
+    display: table;
+}
+
+.membersHeader {
+    display: table-row;
+    font-weight: bold;
+}
+
+.membersHeader div {
+    display: table-cell;
+    padding: 0 10px;
+    border-bottom: 2px solid;
+}
+
+.membersRow {
+    display: table-row;
+}
+
+.membersRow div {
+    display: table-cell;
+    padding: 0 10px;
+}

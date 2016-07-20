@@ -28,9 +28,9 @@ function find(parameters) {
     }
 
     function filterFunction(team) {
-      return (parameters._id !== undefined ? parameters._id === team._id : true) &&
-        (parameters.TeamName !== undefined ? parameters.TeamName === team.TeamName : true) &&
-        (parameters.TeamLevel !== undefined ? parameters.TeamLevel === team.TeamLevel : true);
+      return (parameters._id !== undefined ? parameters._id == team._id : true) &&
+        (parameters.TeamName !== undefined ? parameters.TeamName == team.TeamName : true) &&
+        (parameters.TeamLevel !== undefined ? parameters.TeamLevel == team.TeamLevel : true);
     }
     
     var resultCollection = teams.filter(filterFunction);

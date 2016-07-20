@@ -1,0 +1,32 @@
+.createComponent {
+    border: 2px solid;
+    margin: 10px 2px 2px;
+    padding: 2px;
+}
+
+.componentsList {
+    border: 2px solid;
+    margin: 2px;
+    padding: 2px;
+    display: table;
+}
+
+.componentsHeader {
+    display: table-row;
+    font-weight: bold;
+}
+
+.componentsHeader div {
+    display: table-cell;
+    padding: 0 10px;
+    border-bottom: 2px solid;
+}
+
+.componentsRow {
+    display: table-row;
+}
+
+.componentsRow div {
+    display: table-cell;
+    padding: 0 10px;
+}

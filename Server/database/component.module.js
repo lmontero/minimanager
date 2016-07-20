@@ -48,9 +48,9 @@ function find(parameters) {
     }
 
     function filterFunction(component) {
-      return (parameters._id !== undefined ? parameters._id === component._id : true) &&
-        (parameters.Name !== undefined ? parameters.Name === component.Name : true) &&
-        (parameters.RoomId !== undefined ? parameters.RoomId === component.RoomId : true);
+      return (parameters._id !== undefined ? parameters._id == component._id : true) &&
+        (parameters.Name !== undefined ? parameters.Name == component.Name : true) &&
+        (parameters.RoomId !== undefined ? parameters.RoomId == component.RoomId : true);
     }
 
     var resultCollection = components.filter(filterFunction);

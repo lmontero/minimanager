@@ -1,0 +1,31 @@
+<link href="/members/member.style.css" rel="stylesheet">
+
+<h1>MANAGE MEMBERS</h1>
+<div class="createMember">
+    <div class="teamid">
+        <label>Team Id: </label><input type="text" ng-model="vm.member.TeamId" id="teamId">
+    </div>
+    <div class="employeeid">
+        <label>Employee Id: </label><input type="text" ng-model="vm.member.EmployeeId">
+    </div>
+    <div class="save">
+        <input type="submit" ng-click="vm.saveMember()" value="Create">
+    </div>
+</div>
+
+<div class="membersList">
+    <div class="membersHeader">
+        <div>ID</div>
+        <div>TEAM ID</div>
+        <div>STARTING DATE</div>
+        <div>ENDING DATE</div>
+        <div>EMPLOYEE ID</div>
+    </div>
+    <div class="membersRow" ng-repeat="member in vm.members">
+        <div>{{ member._id }}</div>
+        <div>{{ member.attributes.TeamId }}</div>
+        <div>{{ member.attributes.StartingDate }}</div>
+        <div>{{ member.attributes.EndingDate }}</div>
+        <div>{{ member.attributes.EmployeeId }}</div>
+    </div>
+</div>

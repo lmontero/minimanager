@@ -5,6 +5,7 @@
 
 var employeeModule = require('./employee.module');
 var teamModule = require('./team.module');
+var dateParser = require('../util/parse.date');
 
 var members= [];
 var lastTeamMemberId = 0;
@@ -43,6 +44,8 @@ function add(teamMember) {
       }
   
       teamMember._id = ++lastTeamMemberId;
+      teamMember.StartingDate = dateParser.parseFromDateTimeToDate(new Date());
+      teamMember.EndingDate = null;
       members.push(teamMember);
       return Promise.resolve(teamMember);
     })
@@ -62,11 +65,11 @@ function find(parameters) {
     }
 
     function filterFunction(member) {
-      return (parameters._id !== undefined ? parameters._id === member._id : true) &&
-        (parameters.EmployeeId !== undefined ? parameters.EmployeeId === member.EmployeeId : true) &&
-        (parameters.TeamId !== undefined ? parameters.TeamId === member.TeamId : true) &&
-        (parameters.StartingDate !== undefined ? parameters.StartingDate === member.StartingDate : true) &&
-        (parameters.EndingDate !== undefined ? parameters.EndingDate === member.EndingDate : true);
+      return (parameters._id !== undefined ? parameters._id == member._id : true) &&
+        (parameters.EmployeeId !== undefined ? parameters.EmployeeId == member.EmployeeId : true) &&
+        (parameters.TeamId !== undefined ? parameters.TeamId == member.TeamId : true) &&
+        (parameters.StartingDate !== undefined ? parameters.StartingDate == member.StartingDate : true) &&
+        (parameters.EndingDate !== undefined ? parameters.EndingDate == member.EndingDate : true);
     }
 
     var resultCollection = members.filter(filterFunction);
