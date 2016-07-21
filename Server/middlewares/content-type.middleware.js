@@ -6,7 +6,6 @@ var parser = require('../util/parse.to.json');
 function execute(server) {
   server.use(function (req, res, next) {
     if (req.is('application/json')) {
-      console.log('is json.');
       return next();
     }
     
@@ -17,7 +16,6 @@ function execute(server) {
     );
     
     res.send(406, jsonObject);
-    console.log('is not json.');
     return next();
   });
 }

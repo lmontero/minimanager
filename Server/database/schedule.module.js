@@ -10,6 +10,11 @@ var moment = require('moment');
 var schedules= [];
 var lastScheduleId = 0;
 
+const DATE_TIME_FORMAT = 'MM-DD-YYYY h:mm:ss a';
+const GRANULARITY_FORMAT = 'minute';
+const FIRST_OPEN_LAST_CLOSED_FORMAT = '(]';
+const FIRST_CLOSED_LAST_OPEN_FORMAT = '[)';
+
 function add(schedule) {
   if (!schedules) {
     return Promise.reject({message: 'Error, something was happened with schedules collection.'});
@@ -17,12 +22,27 @@ function add(schedule) {
 
   return Promise.resolve()
     .then(function () {
-      var start = moment(schedule.StartingDateTime, 'MM-DD-YYYY');
-      var end = moment(schedule.EndingDateTime, 'MM-DD-YYYY');
-      console.log(moment());
-      if (end.isBefore(start)) {
-        console.log('Start time is more than end time.');
+      if (compareIfADateTimeIsLessOrEqualThanAnotherDateTime(schedule.StartingDateTime, '' + moment().format(DATE_TIME_FORMAT))) {
+        return Promise.reject({ message: 'Starting date time is less or equal than the current date time.' });
       }
+      if (compareIfADateTimeIsLessOrEqualThanAnotherDateTime(schedule.EndingDateTime, '' + moment().format(DATE_TIME_FORMAT))) {
+        return Promise.reject({ message: 'Ending date time is less or equal than the current date time.' });
+      }
+      if (compareIfADateTimeIsLessOrEqualThanAnotherDateTime(schedule.EndingDateTime, schedule.StartingDateTime)) {
+        return Promise.reject({ message: 'Ending date time is less or equal than Starting date time.' });
+      }
+    })
+    .then(function () {
+      var resultSchedule = schedules.filter(function (innerSchedule) {
+        var currentDateTime = moment().format(DATE_TIME_FORMAT);
+        return innerSchedule.RoomId == schedule.RoomId &&
+        !compareIfADateTimeIsLessOrEqualThanAnotherDateTime(innerSchedule.EndingDateTime, '' + currentDateTime) &&
+          compareIfAScheduleIsInDueWithAnotherSchedule(schedule.StartingDateTime, schedule.EndingDateTime, innerSchedule.StartingDateTime, innerSchedule.EndingDateTime);
+      });
+
+      return resultSchedule.length ? Promise.reject({ message: 'The sent schedule is in due to another schedule.' }) : undefined;
+    })
+    .then(function () {
       if (schedule.RoomId > 0) {
         return roomModule.find({_id: schedule.RoomId})
       }
@@ -35,7 +55,7 @@ function add(schedule) {
       if (result === undefined) {
         return Promise.reject({message: 'Error, the room id is mandatory.'});
       }
-  
+
       if (schedule.TeamId > 0) {
         return teamModule.find({_id: schedule.TeamId});
       }
@@ -81,6 +101,35 @@ function find(parameters) {
 
     return resolve(resultCollection);
   });
+}
+
+/**
+ * Verifies if the first date time is less or equal than the second date time.
+ * @param {string} firstDateTime
+ * @param {string} secondDateTime
+ * @return {boolean}
+ */
+function compareIfADateTimeIsLessOrEqualThanAnotherDateTime(firstDateTime, secondDateTime) {
+  return moment(firstDateTime, DATE_TIME_FORMAT)
+    .isSameOrBefore(moment(secondDateTime, DATE_TIME_FORMAT).format(), GRANULARITY_FORMAT);
+}
+
+/**
+ * Verifies if a schedule is in due with another schedule.
+ * @param {string} startDateTime
+ * @param {string} endDateTime
+ * @param {string} anotherStartDateTime
+ * @param {string} anotherEndDateTime
+ * @return {boolean}
+ */
+function compareIfAScheduleIsInDueWithAnotherSchedule(startDateTime, endDateTime, anotherStartDateTime, anotherEndDateTime) {
+  var startOneMoment = moment(startDateTime, DATE_TIME_FORMAT);
+  var endOneMoment = moment(endDateTime, DATE_TIME_FORMAT);
+  var startTwoMoment = moment(anotherStartDateTime, DATE_TIME_FORMAT);
+  var endTwoMoment = moment(anotherEndDateTime, DATE_TIME_FORMAT);
+  return startOneMoment.isBetween(startTwoMoment.format(), endTwoMoment.format(), GRANULARITY_FORMAT, FIRST_CLOSED_LAST_OPEN_FORMAT) ||
+    endOneMoment.isBetween(startTwoMoment.format(), endTwoMoment.format(), GRANULARITY_FORMAT, FIRST_OPEN_LAST_CLOSED_FORMAT) ||
+    (startOneMoment.isBefore(startTwoMoment.format(), GRANULARITY_FORMAT) && endOneMoment.isAfter(endTwoMoment.format(), GRANULARITY_FORMAT));
 }
 
 module.exports = {
