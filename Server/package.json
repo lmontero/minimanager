@@ -1,18 +1,30 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --harmony server.js"
+    "start": "node --harmony server.js",
+    "coverage": "istanbul cover _mocha -- -R spec"
   },
   "author": "LAMT",
   "license": "ISC",
   "devDependencies": {
-    "restify": "^4.1.1"
+    "blanket": "^1.2.3",
+    "browserify": "^13.0.1",
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.4",
+    "karma": "^1.1.1",
+    "karma-browserify": "^5.1.0",
+    "karma-coverage": "^1.1.0",
+    "karma-mocha": "^1.1.1",
+    "mocha": "^2.5.3",
+    "mocha-istanbul": "^0.3.0",
+    "restify": "^4.1.1",
+    "sinon": "^1.17.4",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
     "moment": "^2.14.1"
-  }
+  },
+  "description": ""
 }
