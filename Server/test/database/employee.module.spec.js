@@ -5,6 +5,16 @@ function execute() {
   'use strict';
 
   var employeeModule = require('../../database/employee.module');
+  
+  describe('Employee Module', function () {
+    describe('insertOne()', function () {
+      
+    });
+    
+    describe('find()', function () {
+      
+    });
+  });
 }
 
 module.exports = execute;

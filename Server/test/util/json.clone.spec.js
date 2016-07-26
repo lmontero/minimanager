@@ -9,15 +9,19 @@ function execute(assert) {
   describe('Json clone', function () {
     describe('CloneObject()', function () {
       it('Should return an object with the same values when is cloned.', function () {
+        var target = {
+          name: 'Rumi',
+          age: 15
+        };
+        
         var expected = {
           name: 'Rumi',
           age: 15
         };
         
-        var result = jsonCloneModule.getClonedObject(expected);
+        var result = jsonCloneModule.getClonedObject(target);
         
-        assert.equal(expected.name, result.name);
-        assert.equal(expected.age, result.age);
+        assert.deepEqual(result, expected);
       });
     });
   });

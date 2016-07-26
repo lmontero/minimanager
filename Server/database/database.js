@@ -3,13 +3,28 @@
  */
 'use strict';
 
-var componentModule = require('./component.module');
-var employeeModule = require('./employee.module');
-var personModule = require('./person.module');
-var roomModule = require('./room.module');
-var scheduleModule = require('./schedule.module');
-var teamModule = require('./team.module');
-var memberModule = require('./team-member.module');
+var components = [];
+var employees = [];
+var people = [];
+var rooms = [];
+var schedules = [];
+var teams = [];
+var members = [];
+var lastComponentId = 0;
+var lastEmployeeId = 0;
+var lastPersonId = 0;
+var lastRoomId = 0;
+var lastScheduleId = 0;
+var lastTeamId = 0;
+var lastMemberId = 0;
+
+var roomModule = require('./room.module')(rooms, lastRoomId);
+var personModule = require('./person.module')(people, lastPersonId);
+var teamModule = require('./team.module')(teams, lastTeamId);
+var componentModule = require('./component.module')(components, lastComponentId, roomModule);
+var employeeModule = require('./employee.module')(employees, lastEmployeeId, personModule);
+var memberModule = require('./team-member.module')(members, lastMemberId, teamModule, employeeModule);
+var scheduleModule = require('./schedule.module')(schedules, lastScheduleId, roomModule, teamModule);
 
 function loadModules() {
   return {

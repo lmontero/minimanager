@@ -5,6 +5,16 @@ function execute() {
   'use strict';
   
   var scheduleModule = require('../../database/schedule.module');
+  
+  describe('Schedule Module', function () {
+    describe('insertOne()', function () {
+      
+    });
+    
+    describe('find()', function () {
+      
+    });
+  });
 }
 
 module.exports = execute;

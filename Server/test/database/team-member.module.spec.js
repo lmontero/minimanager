@@ -5,6 +5,16 @@ function execute() {
   'use strict';
   
   var memberModule = require('../../database/team-member.module');
+  
+  describe('Member Module', function () {
+    describe('insertOne()', function () {
+      
+    });
+    
+    describe('find()', function () {
+      
+    });
+  });
 }
 
 module.exports = execute;

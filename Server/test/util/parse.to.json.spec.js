@@ -21,9 +21,8 @@ function execute(assert) {
         };
 
         var result = jsonParser.parseError(code, title, detail);
-        assert.equal(expected.errors[0].code, result.errors[0].code);
-        assert.equal(expected.errors[0].title, result.errors[0].title);
-        assert.equal(expected.errors[0].detail, result.errors[0].detail);
+        
+        assert.sameDeepMembers(expected.errors, result.errors);
       });
 
       it('Should return a json object with undefined code when an object without message object is sent.', function () {
@@ -60,11 +59,7 @@ function execute(assert) {
         
         var result = jsonParser.parseSuccessOne(countryEntity, entityName);
 
-        assert.equal(expectedCountry.data._id, result.data._id);
-        assert.equal(expectedCountry.data.type, result.data.type);
-        assert.equal(expectedCountry.data.attributes.name, result.data.attributes.name);
-        assert.equal(expectedCountry.data.attributes.longitude, result.data.attributes.longitude);
-        assert.equal(expectedCountry.data.attributes.latitude, result.data.attributes.latitude);
+        assert.deepEqual(expectedCountry, result);
       });
     });
 
@@ -107,16 +102,8 @@ function execute(assert) {
         };
         
         var result = jsonParser.parseSuccessMany([firstCountry, secondCountry], entityName);
-        assert.equal(expectedCountries.data[0]._id, result.data[0]._id);
-        assert.equal(expectedCountries.data[0].type, result.data[0].type);
-        assert.equal(expectedCountries.data[0].attributes.name, result.data[0].attributes.name);
-        assert.equal(expectedCountries.data[0].attributes.longitude, result.data[0].attributes.longitude);
-        assert.equal(expectedCountries.data[0].attributes.latitude, result.data[0].attributes.latitude);
-        assert.equal(expectedCountries.data[1]._id, result.data[1]._id);
-        assert.equal(expectedCountries.data[1].type, result.data[1].type);
-        assert.equal(expectedCountries.data[1].attributes.name, result.data[1].attributes.name);
-        assert.equal(expectedCountries.data[1].attributes.longitude, result.data[1].attributes.longitude);
-        assert.equal(expectedCountries.data[1].attributes.latitude, result.data[1].attributes.latitude);
+        
+        assert.sameDeepMembers(expectedCountries.data, result.data);
       });
     });
   });
